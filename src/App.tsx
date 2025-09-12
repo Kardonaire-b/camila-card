@@ -11,9 +11,10 @@ import cabinImg from "./assets/gallery/lighthouse.png";
 import songUrl from "./assets/audio/melody.mp3";
 
 type Horizon = "dawn" | "day" | "sunset" | "night";
+type Lang = 'ru' | 'es';
 
 export default function CamilaPostcardV5() {
-  const [lang, setLang] = useState("es");
+  const [lang, setLang] = useState<Lang>((localStorage.getItem('lang') as Lang) ?? 'ru');
   const [horizon, setHorizon] = useState<Horizon>("day");; // dawn | day | sunset | night
   const [page, setPage] = useState("home"); // home | lighthouse | letter | gallery | thanks
 
