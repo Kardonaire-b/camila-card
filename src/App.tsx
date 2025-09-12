@@ -83,7 +83,9 @@ export default function CamilaPostcardV5() {
   );
 }
 
-function TopBar({ title, lang, onToggleLang, ariaLabel }) {
+function TopBar(
+  { title, lang, onToggleLang, ariaLabel }: { title: string; lang: string; onToggleLang: () => void; ariaLabel: string }
+) { /* … */ }  // :contentReference[oaicite:2]{index=2}
   return (
     <div className="fixed top-0 left-0 right-0 z-10">
       <div className="mx-auto max-w-md px-4 pt-5">
