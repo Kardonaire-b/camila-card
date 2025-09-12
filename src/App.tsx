@@ -84,8 +84,13 @@ export default function CamilaPostcardV5() {
 }
 
 function TopBar(
-  { title, lang, onToggleLang, ariaLabel }: { title: string; lang: string; onToggleLang: () => void; ariaLabel: string }
-) { /* … */ }  // :contentReference[oaicite:2]{index=2}
+  { title, lang, onToggleLang, ariaLabel }: {
+    title: string;
+    lang: string;
+    onToggleLang: () => void;
+    ariaLabel: string;
+  }
+) {
   return (
     <div className="fixed top-0 left-0 right-0 z-10">
       <div className="mx-auto max-w-md px-4 pt-5">
@@ -107,16 +112,17 @@ function TopBar(
   );
 }
 
-function PageWrap({ children }) {
+
+function PageWrap({ children }: { children: React.ReactNode }) {
   return (
     <motion.section initial={{ opacity: 0, y: 12, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98 }} transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }} className="space-y-4">
       {children}
     </motion.section>
   );
-}
+}  // :contentReference[oaicite:3]{index=3}
 
 // ─────────────────────────── Home ───────────────────────────
-function Home({ t, onStart }) {
+function Home({ t, onStart }: { t: any; onStart: () => void }) {
   return (
     <div className="flex flex-col items-center gap-3">
       {/* 1) Интро */}
@@ -150,10 +156,12 @@ function Home({ t, onStart }) {
       </motion.button>
     </div>
   );
-}
+}  // :contentReference[oaicite:4]{index=4}
 
 // ─────────────────────────── Lighthouse ─────────────────────
-function Lighthouse({ t, horizon, setHorizon }) {
+function Lighthouse(
+  { t, horizon, setHorizon }: { t: any; horizon: "dawn" | "day" | "sunset" | "night"; setHorizon: (h: "dawn" | "day" | "sunset" | "night") => void }
+) {
   // ► аудио: создаём и храним один экземпляр
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setPlaying] = useState(false);
@@ -219,10 +227,10 @@ function Lighthouse({ t, horizon, setHorizon }) {
       </div>
     </div>
   );
-}
+}  // :contentReference[oaicite:5]{index=5}
 
 
-function HorizonChip({ label, active, onClick }) {
+function HorizonChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
@@ -235,7 +243,7 @@ function HorizonChip({ label, active, onClick }) {
   );
 }
 
-function LighthouseSVG({ horizon }) {
+function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "night" }) {
   const isNight = horizon === "night";
   const isDay = horizon === "day";
   const isDawn = horizon === "dawn";
@@ -481,7 +489,7 @@ function Letter({ t }) {
 
 
 // ─────────────────────────── Gallery ───────────────────────
-function Gallery({ t }) {
+function Gallery({ t }: { t: any }) {
   const [tip, setTip] = useState<string | null>(null);
 
   useEffect(() => {
@@ -522,7 +530,7 @@ function Gallery({ t }) {
 }
 
 
-function ImageCard({ title, src, onClick }) {
+function ImageCard({ title, src, onClick }: { title: string; src: string; onClick: () => void }) {
   return (
     <motion.button
       onClick={onClick}
@@ -580,19 +588,8 @@ function CaptionBar({ text }: { text: string | null }) {
   );
 }
 
-
-
-function MiniCard({ title, children }) {
-  return (
-    <div className="glass soft-card flex aspect-square flex-col items-center justify-center rounded-2xl" aria-label={title}>
-      {children}
-      <div className="mt-2 text-xs text-[var(--ink)]/80">{title}</div>
-    </div>
-  );
-}
-
 // ─────────────────────────── Thanks ────────────────────────
-function Thanks({ t, onRelight }) {
+function Thanks({ t }: { t: any }) {
   return (
     <div className="glass soft-card overflow-hidden rounded-3xl p-6 text-center">
       <h2 className="mb-2 text-xl font-semibold text-[var(--ink)]">{t.thanksTitle}</h2>
@@ -619,7 +616,9 @@ function Thanks({ t, onRelight }) {
 }
 
 // ─────────────────────────── BottomNav ─────────────────────
-function BottomNav({ t, page, onNavigate }) {
+function BottomNav(
+  { t, page, onNavigate }: { t: any; page: string; onNavigate: (k: string) => void }
+) {
   const items = [
     { key: "home", label: t.navHome, icon: <HomeIcon className="h-5 w-5" /> },
     { key: "lighthouse", label: t.navLighthouse, icon: <LightIcon className="h-5 w-5" /> },
