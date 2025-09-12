@@ -10,9 +10,11 @@ import cabinImg from "./assets/gallery/lighthouse.png";
 
 import songUrl from "./assets/audio/melody.mp3";
 
+type Horizon = "dawn" | "day" | "sunset" | "night";
+
 export default function CamilaPostcardV5() {
   const [lang, setLang] = useState("es");
-  const [horizon, setHorizon] = useState("sunset"); // dawn | day | sunset | night
+  const [horizon, setHorizon] = useState<Horizon>("day");; // dawn | day | sunset | night
   const [page, setPage] = useState("home"); // home | lighthouse | letter | gallery | thanks
 
   const t = useMemo(() => translations[lang], [lang]);
@@ -23,7 +25,7 @@ export default function CamilaPostcardV5() {
     sunset: ["#fde68a", "#fca5a5"],
     night: ["#0f172a", "#1e293b"],
   };
-
+  
   const bg = useMemo(() => `linear-gradient(to top, ${palettes[horizon][0]}, ${palettes[horizon][1]})`, [horizon]);
 
   useEffect(() => {
@@ -442,7 +444,7 @@ function TypewriterParagraph({
   return <p className="mb-4 whitespace-pre-wrap">{text.slice(0, len)}</p>;
 }
 
-function Letter({ t }) {
+function Letter({ t }: { t: any }) {
   useHandwrittenFont();
 
   // Берём новые блоки письма, если уже завели; иначе fallback на старые p1..p3
@@ -589,27 +591,20 @@ function CaptionBar({ text }: { text: string | null }) {
 }
 
 // ─────────────────────────── Thanks ────────────────────────
-function Thanks({ t }: { t: any }) {
+function Thanks({ t, onRelight }: { t: any; onRelight: () => void }) {
   return (
     <div className="glass soft-card overflow-hidden rounded-3xl p-6 text-center">
       <h2 className="mb-2 text-xl font-semibold text-[var(--ink)]">{t.thanksTitle}</h2>
       <p className="mx-auto max-w-sm text-[var(--ink)]/90">{t.thanksCopy}</p>
 
-      <img
-        src={thanksSketch}
-        alt="Рисунок"
-        className="mx-auto mt-4 max-h-64 w-auto rounded-2xl border border-white/50 shadow object-contain"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src={thanksSketch} alt="Рисунок"
+           className="mx-auto mt-4 max-h-64 w-auto rounded-2xl border border-white/50 shadow object-contain"
+           loading="lazy" decoding="async" />
 
-      {/* была ShareButton — теперь просто переход к Маяку */}
       <button
         onClick={onRelight}
-        className="mt-4 rounded-xl border border-white/50 bg-white/70 px-4 py-2 text-sm text-[var(--ink)] hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-black/10"
-        aria-label={t.homeOpen}
-      >
-        {t.shareBtn}
+        className="mt-4 rounded-xl border border-white/50 bg-white/70 px-4 py-2 text-sm text-[var(--ink)] hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-black/10">
+        {t.relight}
       </button>
     </div>
   );
@@ -696,54 +691,6 @@ function SparkleIcon({ className = "" }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
       <path d="M12 2 L14 8 L20 10 L14 12 L12 18 L10 12 L4 10 L10 8 Z" />
-    </svg>
-  );
-}
-function StoneIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
-      <ellipse cx="12" cy="14" rx="9" ry="6" />
-    </svg>
-  );
-}
-function SnailIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <path d="M5 16 C 5 12, 11 12, 11 16 C 11 19, 7 19, 7 16 C 7 14, 9 14, 9 16" />
-      <path d="M2 16 H20 C22 16 22 13 20 13 C 19 13 19 14 20 14" />
-    </svg>
-  );
-}
-function BookIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <path d="M4 5 H14 A3 3 0 0 1 17 8 V20 H7 A3 3 0 0 1 4 17 Z" />
-      <path d="M7 20 V8 A3 3 0 0 1 10 5 H20 V20" />
-    </svg>
-  );
-}
-function EyeIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <path d="M2 12 C 5 6, 19 6, 22 12 C 19 18, 5 18, 2 12 Z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-  );
-}
-function NoteIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <path d="M9 5 V17 A3 3 0 1 1 7 14" />
-      <path d="M15 5 V13 A3 3 0 1 1 13 10" />
-    </svg>
-  );
-}
-function CabinIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <path d="M3 12 L12 5 L21 12" />
-      <rect x="5" y="12" width="14" height="8" />
-      <rect x="10" y="14" width="4" height="6" />
     </svg>
   );
 }
