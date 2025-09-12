@@ -604,7 +604,7 @@ function Thanks({ t, onRelight }: { t: any; onRelight: () => void }) {
       <button
         onClick={onRelight}
         className="mt-4 rounded-xl border border-white/50 bg-white/70 px-4 py-2 text-sm text-[var(--ink)] hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-black/10">
-        {t.relight}
+        {t.shareBtn}
       </button>
     </div>
   );
