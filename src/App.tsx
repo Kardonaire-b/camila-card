@@ -15,8 +15,8 @@ type Lang = 'ru' | 'es';
 
 export default function CamilaPostcardV5() {
   const [lang, setLang] = useState<Lang>((localStorage.getItem('lang') as Lang) ?? 'ru');
-  const [horizon, setHorizon] = useState<Horizon>("day");; // dawn | day | sunset | night
-  const [page, setPage] = useState("home"); // home | lighthouse | letter | gallery | thanks
+  const [horizon, setHorizon] = useState<Horizon>("day");
+  const [page, setPage] = useState("home");
 
   const t = useMemo(() => translations[lang], [lang]);
 
@@ -115,20 +115,17 @@ function TopBar(
   );
 }
 
-
 function PageWrap({ children }: { children: React.ReactNode }) {
   return (
     <motion.section initial={{ opacity: 0, y: 12, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98 }} transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }} className="space-y-4">
       {children}
     </motion.section>
   );
-}  // :contentReference[oaicite:3]{index=3}
+}
 
-// ─────────────────────────── Home ───────────────────────────
 function Home({ t, onStart }: { t: any; onStart: () => void }) {
   return (
     <div className="flex flex-col items-center gap-3">
-      {/* 1) Интро */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -139,7 +136,6 @@ function Home({ t, onStart }: { t: any; onStart: () => void }) {
         </p>
       </motion.div>
 
-      {/* 2) Инструкции/навигация */}
       <div className="glass soft-card w-full rounded-3xl p-5">
         <ul className="space-y-2 text-sm text-[var(--ink)]/90">
           <li>• {t.tipsNav}</li>
@@ -148,7 +144,6 @@ function Home({ t, onStart }: { t: any; onStart: () => void }) {
         </ul>
       </div>
 
-      {/* 3) Кнопка «Зажечь свет…» — перенесена ниже */}
       <motion.button
         onClick={onStart}
         whileTap={{ scale: 0.97 }}
@@ -159,13 +154,11 @@ function Home({ t, onStart }: { t: any; onStart: () => void }) {
       </motion.button>
     </div>
   );
-}  // :contentReference[oaicite:4]{index=4}
+}
 
-// ─────────────────────────── Lighthouse ─────────────────────
 function Lighthouse(
   { t, horizon, setHorizon }: { t: any; horizon: "dawn" | "day" | "sunset" | "night"; setHorizon: (h: "dawn" | "day" | "sunset" | "night") => void }
 ) {
-  // ► аудио: создаём и храним один экземпляр
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setPlaying] = useState(false);
 
@@ -175,7 +168,7 @@ function Lighthouse(
     a.preload = "auto";
     a.volume = 0.9;
     audioRef.current = a;
-    return () => { a.pause(); audioRef.current = null; }; // автостоп при уходе со страницы
+    return () => { a.pause(); audioRef.current = null; };
   }, []);
 
   const toggleAudio = async () => {
@@ -200,7 +193,6 @@ function Lighthouse(
         <div className="relative mx-auto aspect-[4/3] w-full max-w-sm">
           <LighthouseSVG horizon={horizon} />
 
-          {/* маленькая нота в правом верхнем углу */}
           <button
             onClick={toggleAudio}
             className={`absolute right-2 top-2 rounded-xl border border-white/60 bg-white/80 p-2 text-[var(--ink)] shadow
@@ -208,14 +200,12 @@ function Lighthouse(
             aria-label={isPlaying ? t.a11y.pauseMelody : t.a11y.playMelody}
             title={isPlaying ? t.a11y.pauseMelody : t.a11y.playMelody}
           >
-            {/* простая иконка-нота; можно заменить на твою */}
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
               <path d="M9 5 V17 A3 3 0 1 1 7 14" />
               <path d="M15 5 V13 A3 3 0 1 1 13 10" />
             </svg>
           </button>
 
-          {/* маленькая точка-индикатор состояния (опционально) */}
           <div className={`absolute right-2 top-2 -mr-1 -mt-1 h-2 w-2 rounded-full ${isPlaying ? "bg-green-500/80" : "bg-transparent"}`} />
         </div>
 
@@ -230,8 +220,7 @@ function Lighthouse(
       </div>
     </div>
   );
-}  // :contentReference[oaicite:5]{index=5}
-
+}
 
 function HorizonChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
@@ -252,15 +241,13 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
   const isDawn = horizon === "dawn";
   const isSunset = horizon === "sunset";
 
-  const BEAM_APEX_X = 161;           // точка-апекс внутри фонаря
+  const BEAM_APEX_X = 161;
   const BEAM_APEX_Y = 112;
 
-  const BEAM_LEN = 175;             // насколько далеко уходят лучи
-  const BEAM_SPAN = isNight ? 58 : 42; // ширина на дальнем конце
+  const BEAM_LEN = 175;
+  const BEAM_SPAN = isNight ? 58 : 42;
   const BEAM_OPA = isNight ? 0.62 : 0.36;
   const BEAM_COL = isNight ? "#fff3cf" : "#fff8e1";
-
-
 
   const stars = React.useMemo(
     () => Array.from({ length: 22 }).map(() => ({
@@ -285,7 +272,6 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
         <clipPath id="beamClip" clipPathUnits="userSpaceOnUse">
           <rect x="0" y="36" width="320" height="130" rx="10" />
         </clipPath>
-        {/* Мягкие края луча */}
         <linearGradient id="beamFill" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
           <stop offset="0" stopColor={BEAM_COL} stopOpacity="0" />
           <stop offset="0.35" stopColor={BEAM_COL} stopOpacity={BEAM_OPA} />
@@ -293,19 +279,16 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
           <stop offset="1" stopColor={BEAM_COL} stopOpacity="0" />
         </linearGradient>
 
-        {/* Лёгкое свечение вокруг апекса, чтобы скрыть шов */}
         <filter id="beamSoft" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.2" />
         </filter>
       </defs>
 
-      {/* Солнце/Луна */}
       {isDay && <circle cx="260" cy="40" r="12" fill="#fff59d" opacity="0.9" />}
       {isDawn && <circle cx="260" cy="44" r="10" fill="#ffe082" opacity="0.85" />}
       {isSunset && <circle cx="60" cy="36" r="11" fill="#ffd166" opacity="0.85" />}
       {isNight && <circle cx="55" cy="35" r="9" fill="#f8fafc" opacity="0.9" />}
 
-      {/* Звёзды */}
       {isNight && (
         <g fill="#ffffff" opacity="0.85">
           {stars.map((s, i) => (
@@ -314,7 +297,6 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
         </g>
       )}
 
-      {/* Море */}
       <rect x="0" y="150" width="320" height="90" fill="url(#seaFill)" />
       <motion.path
         d="M0 170 C 40 165, 80 175, 120 170 C 160 165, 200 175, 240 170 C 280 165, 320 175, 360 170 L 360 240 L 0 240 Z"
@@ -324,14 +306,10 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
         style={{ filter: "blur(0.3px)" }}
       />
 
-      {/* Берег */}
       <path d="M0 182 C 60 165, 80 210, 140 198 C 200 190, 260 210, 320 190 L 320 240 L 0 240 Z" fill="#2b344a" opacity="0.28" />
 
-      {/* Тень от маяка */}
       <ellipse cx="160" cy="212" rx="18" ry="5" fill={isNight ? "rgba(0,0,0,0.25)" : "rgba(0,0,0,0.12)"} />
 
-
-      {/* ЕДИНЫЙ двухсторонний луч: один path с двумя подпутями; апекс фиксирован */}
       {isNight && (
         <g clipPath="url(#beamClip)">
           <g transform={`translate(${BEAM_APEX_X}, ${BEAM_APEX_Y})`}>
@@ -355,17 +333,11 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
         </g>
       )}
 
-
-
-
-      {/* Маяк из предоставленного SVG (вписан, слегка смягчены цвета) */}
       <g filter="url(#softGlow)">
         <g
           transform="translate(160,210) scale(0.28) translate(-256,-472)"
           style={{ filter: isNight ? "saturate(0.85) brightness(0.95)" : "saturate(0.95) brightness(1.04)" }}
         >
-          {/* Убраны: внешнее солнце и большие жёлтые треугольники — используем сцену сайта */}
-          {/* Начало вставки путей из предоставленного SVG */}
           <path fill="#2FB49F" d="M304.266 91.162c0 26.657-21.609 28.266-48.266 28.266s-48.266-1.609-48.266-28.266S229.343 42.896 256 42.896s48.266 21.61 48.266 48.266z" />
           <path fill="#E3E3E3" d="M200.679 419.659h110.642l-1.708-31.087H202.387z" />
           <path fill="#A6A6A6" d="M309.967 395.015H202.033l-1.354 25h110.642z" />
@@ -377,11 +349,9 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
           <path fill="#FF6650" d="M311.393 166.058H200.607a8.181 8.181 0 0 1 0-16.362h110.786a8.181 8.181 0 0 1 0 16.362zM311.393 96.071H200.607a8.181 8.181 0 0 1 0-16.362h110.786a8.181 8.181 0 0 1 0 16.362z" />
           <path fill="#4A4A4A" d="M240.991 257.015v-8.634c0-8.191 6.64-14.832 14.832-14.832h.354c8.191 0 14.832 6.64 14.832 14.832v8.634M238.886 322.015v-9.845c0-9.34 7.572-16.912 16.912-16.912h.403c9.34 0 16.912 7.572 16.912 16.912v9.845M235.943 389.015v-11.539c0-10.946 8.874-19.82 19.82-19.82h.473c10.946 0 19.82 8.874 19.82 19.82v11.539M227 472.015v-16.684c0-15.827 12.831-28.658 28.658-28.658h.684c15.827 0 28.658 12.831 28.658 28.658v16.684" />
           <path fill="#E3E3E3" d="M267.592 44.896h-23.184a5.941 5.941 0 0 1 0-11.882h23.184a5.94 5.94 0 1 1 0 11.882z" />
-          {/* Конец вставки путей */}
         </g>
       </g>
 
-      {/* Облака */}
       <g opacity="0.7" fill="#ffffff">
         <motion.ellipse cx="60" cy="60" rx="22" ry="10" animate={{ y: [0, 1.5, 0] }} transition={{ duration: 5.5, repeat: Infinity }} />
         <motion.ellipse cx="84" cy="60" rx="16" ry="8" animate={{ y: [0, 1.2, 0] }} transition={{ duration: 4.8, repeat: Infinity }} />
@@ -392,8 +362,6 @@ function LighthouseSVG({ horizon }: { horizon: "dawn" | "day" | "sunset" | "nigh
     </svg>
   );
 }
-
-// ─────────────────────────── Letter ─────────────────────────
 
 function useHandwrittenFont() {
   React.useEffect(() => {
@@ -438,7 +406,6 @@ function TypewriterParagraph({
       }, speed);
       return () => clearInterval(id);
     }
-    // В остальных фазах выставляем целиком/пусто без анимации
     setLen(phase === "done" ? text.length : 0);
   }, [phase, text, speed, onDone]);
 
@@ -448,18 +415,15 @@ function TypewriterParagraph({
 function Letter({ t }: { t: any }) {
   useHandwrittenFont();
 
-  // Берём новые блоки письма, если уже завели; иначе fallback на старые p1..p3
   const blocks: string[] = t.letterBlocks ?? [t.letterP1, t.letterP2, t.letterP3];
   const [idx, setIdx] = React.useState(0);
 
-  // Уважить reduce motion — сразу показать всё
   React.useEffect(() => {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
       setIdx(blocks.length);
     }
   }, [blocks]);
 
-  // Переключили язык/текст — начать заново
   React.useEffect(() => { setIdx(0); }, [blocks]);
 
   return (
@@ -489,9 +453,6 @@ function Letter({ t }: { t: any }) {
   );
 }
 
-
-
-// ─────────────────────────── Gallery ───────────────────────
 function Gallery({ t }: { t: any }) {
   const [tip, setTip] = useState<string | null>(null);
 
@@ -515,7 +476,6 @@ function Gallery({ t }: { t: any }) {
         <p className="text-[var(--ink)]/90">{t.galleryCopy}</p>
       </div>
 
-      {/* 2×2 карточки, крупнее и аккуратнее */}
       <div className="grid grid-cols-2 gap-3">
         {cards.map(c => (
           <ImageCard
@@ -531,7 +491,6 @@ function Gallery({ t }: { t: any }) {
     </div>
   );
 }
-
 
 function ImageCard({ title, src, onClick }: { title: string; src: string; onClick: () => void }) {
   return (
@@ -552,10 +511,8 @@ function ImageCard({ title, src, onClick }: { title: string; src: string; onClic
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
       />
 
-      {/* мягкий градиент снизу для читаемости */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
 
-      {/* компактная плашка-бейдж с названием */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 p-2">
         <span className="inline-block rounded-xl bg-white/80 px-2 py-1 text-[12px] font-medium text-[var(--ink)] shadow-sm backdrop-blur">
           {title}
@@ -564,7 +521,6 @@ function ImageCard({ title, src, onClick }: { title: string; src: string; onClic
     </motion.button>
   );
 }
-
 
 function CaptionBar({ text }: { text: string | null }) {
   return (
@@ -591,7 +547,6 @@ function CaptionBar({ text }: { text: string | null }) {
   );
 }
 
-// ─────────────────────────── Thanks ────────────────────────
 function Thanks({ t, onRelight }: { t: any; onRelight: () => void }) {
   return (
     <div className="glass soft-card overflow-hidden rounded-3xl p-6 text-center">
@@ -611,7 +566,6 @@ function Thanks({ t, onRelight }: { t: any; onRelight: () => void }) {
   );
 }
 
-// ─────────────────────────── BottomNav ─────────────────────
 function BottomNav(
   { t, page, onNavigate }: { t: any; page: string; onNavigate: (k: string) => void }
 ) {
@@ -645,7 +599,6 @@ function BottomNav(
   );
 }
 
-// ─────────────────────────── Icons ─────────────────────────
 function HomeIcon({ className = "" }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
@@ -696,7 +649,6 @@ function SparkleIcon({ className = "" }) {
   );
 }
 
-// ─────────────────────────── Translations ──────────────────
 const translations = {
   es: {
     topbarTitle: "Para Camila",
