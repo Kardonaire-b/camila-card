@@ -226,15 +226,11 @@ function TopBar(
   return (
     <div className="fixed top-0 left-0 right-0 z-10">
       <div className="mx-auto max-w-md px-4 pt-5">
-        <div className="glass soft-card festive-glow flex items-center justify-between rounded-2xl px-4 py-3">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🎄</span>
-            <h1 className="text-lg font-semibold tracking-tight text-[var(--ink)]">{title}</h1>
-            <span className="text-lg">✨</span>
-          </div>
+        <div className="glass soft-card festive-glow flex items-center justify-between rounded-2xl px-3 py-2">
+          <h1 className="text-sm sm:text-base font-semibold tracking-tight text-[var(--ink)] truncate">{title}</h1>
           <button
             onClick={onToggleLang}
-            className="rounded-xl border border-white/50 px-3 py-1 text-sm text-[var(--ink)] hover:bg-white/60 focus:outline-none focus:ring-2 focus:ring-black/10"
+            className="rounded-xl border border-white/50 px-2 py-1 text-xs sm:text-sm text-[var(--ink)] hover:bg-white/60 focus:outline-none focus:ring-2 focus:ring-black/10 shrink-0"
             aria-label={ariaLabel}
           >
             {lang.toUpperCase()}
@@ -258,17 +254,6 @@ function PageWrap({ children }: { children: React.ReactNode }) {
 function Home({ t, onStart }: { t: any; onStart: () => void }) {
   return (
     <div className="flex flex-col items-center gap-3">
-      {/* New Year greeting header */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="text-center mb-2"
-      >
-        <span className="text-4xl">🎄</span>
-        <span className="text-3xl mx-2">✨</span>
-        <span className="text-4xl">🎅</span>
-      </motion.div>
-
       {/* 1) Интро */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -361,7 +346,7 @@ function Lighthouse(
           <div className={`absolute right-2 top-2 -mr-1 -mt-1 h-2 w-2 rounded-full ${isPlaying ? "bg-green-500/80" : "bg-transparent"}`} />
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
           <HorizonChip label={t.horizonDawn} active={horizon === "dawn"} onClick={() => setHorizon("dawn")} />
           <HorizonChip label={t.horizonDay} active={horizon === "day"} onClick={() => setHorizon("day")} />
           <HorizonChip label={t.horizonSunset} active={horizon === "sunset"} onClick={() => setHorizon("sunset")} />
@@ -978,13 +963,13 @@ function BottomNav(
 
 const translations = {
   es: {
-    topbarTitle: "🎄 Feliz Año Nuevo, Camila 🎄",
-    homeIntro: "✨ Para la Guardiana del Faro y la Cartógrafa de nuestros mundos — ¡Que el Año Nuevo traiga más luz a nuestra cabaña! ✨",
-    homeOpen: "Encender las luces del Año Nuevo 🎄✨",
+    topbarTitle: "Feliz Año Nuevo, Camila",
+    homeIntro: "Para la Guardiana del Faro y la Cartógrafa de nuestros mundos — ¡Que el Año Nuevo traiga más luz a nuestra cabaña!",
+    homeOpen: "Encender las luces del Año Nuevo",
     tipsNav: "Es el mapa de nuestra casa mágica de invierno... Un lugar donde los copos de nieve guardan nuestros secretos",
     tipsHorizon: "En la página 'Faro' puedes ver la noche de Año Nuevo o un día nevado",
     tipsLang: "El botón ES/RU arriba cambia el idioma del sitio.",
-    lighthouseTitle: "🏠 Nuestro Faro de Año Nuevo",
+    lighthouseTitle: "Nuestro Faro de Año Nuevo",
     lighthouseCopy: "En esta noche mágica, nuestro faro brilla más que nunca. Cada copo de nieve lleva un deseo para ti, mi Guardiana.",
     playMelody: "Reproducir melodía",
     pauseMelody: "Pausa de la melodía",
@@ -995,10 +980,10 @@ const translations = {
     horizonHint: "Cambia el cielo de Año Nuevo",
     letterTitle: "🎁 Carta de Año Nuevo",
     letterBlocks: [
-      "Camila, mi Guardiana. ✨ En esta noche mágica de Año Nuevo, quiero agradecerte por todo el calor que trajiste a mi vida este año.",
+      "Camila, mi Guardiana. En esta noche mágica de Año Nuevo, quiero agradecerte por todo el calor que trajiste a mi vida este año.",
       "Nuestro Faro brilló incluso en las noches más oscuras, porque tú estabas ahí para encender la luz. Cada momento contigo fue un regalo.",
-      "Que el Año Nuevo nos traiga más aventuras, más risas, más música, y que nuestra cabaña junto al lago se llene de aún más calidez. 🎄",
-      "¡Feliz Año Nuevo, mi amor! ❄️🎆\n— Tu Guardián, Ilya"
+      "Que el Año Nuevo nos traiga más aventuras, más risas, más música, y que nuestra cabaña junto al lago se llene de aún más calidez.",
+      "¡Feliz Año Nuevo, mi amor!\n— Tu Guardián, Ilya"
     ],
     // Countdown translations
     letterLockedTitle: "🔐 El sobre está sellado",
@@ -1008,9 +993,9 @@ const translations = {
     countdownHours: "horas",
     countdownMinutes: "min",
     countdownSeconds: "seg",
-    thanksTitle: "🎆 Feliz Año Nuevo 🎆",
-    thanksCopy: "Gracias por este año increíble. Por cada sonrisa, cada abrazo, cada momento de luz en la oscuridad. Que el próximo año nos traiga aún más magia. ¡Te quiero! ❄️✨🎄",
-    shareBtn: "Encender los fuegos artificiales una vez más 🎆",
+    thanksTitle: "Feliz Año Nuevo",
+    thanksCopy: "Gracias por este año increíble. Por cada sonrisa, cada abrazo, cada momento de luz en la oscuridad. Que el próximo año nos traiga aún más magia. ¡Te quiero!",
+    shareBtn: "Encender los fuegos artificiales",
     shareTitle: "Tarjeta de Año Nuevo para Camila",
     shareText: "Una pequeña tarjeta de Año Nuevo para Camila — con nieve, magia y amor.",
     shareCopied: "El texto ha sido copiado al portapapeles.",
@@ -1052,22 +1037,22 @@ const translations = {
     horizonHint: "Меняй новогоднее небо",
     letterTitle: "🎁 Новогоднее письмо",
     letterBlocks: [
-      "Камила, моя Хранительница. ✨ В эту волшебную новогоднюю ночь я хочу поблагодарить тебя за всё тепло, которое ты принесла в мою жизнь в этом году.",
+      "Камила, моя Хранительница. В эту волшебную новогоднюю ночь я хочу поблагодарить тебя за всё тепло, которое ты принесла в мою жизнь в этом году.",
       "Наш Маяк светил даже в самые тёмные ночи, потому что ты была рядом, чтобы зажечь свет. Каждое мгновение с тобой было подарком.",
-      "Пусть Новый Год принесёт нам ещё больше приключений, смеха, музыки, и пусть наша избушка у озера наполнится ещё большим теплом. 🎄",
-      "С Новым Годом, любовь моя! ❄️🎆\n— Твой Хранитель, Илья"
+      "Пусть Новый Год принесёт нам ещё больше приключений, смеха, музыки, и пусть наша избушка у озера наполнится ещё большим теплом.",
+      "С Новым Годом, любовь моя!\n— Твой Хранитель, Илья"
     ],
     // Countdown translations
-    letterLockedTitle: "🔐 Конверт запечатан",
+    letterLockedTitle: "Конверт запечатан",
     letterLockedCopy: "Это письмо откроется ровно в полночь на Новый Год...",
-    letterLockedHint: "🌟 По времени Буэнос-Айреса (Аргентина)",
+    letterLockedHint: "По времени Буэнос-Айреса (Аргентина)",
     countdownDays: "дней",
     countdownHours: "часов",
     countdownMinutes: "мин",
     countdownSeconds: "сек",
-    thanksTitle: "🎆 С Новым Годом 🎆",
-    thanksCopy: "Спасибо за этот невероятный год. За каждую улыбку, каждое объятие, каждый момент света во тьме. Пусть следующий год принесёт нам ещё больше волшебства. Люблю тебя! ❄️✨🎄",
-    shareBtn: "Запустить фейерверк ещё раз 🎆",
+    thanksTitle: "С Новым Годом 🎆",
+    thanksCopy: "Спасибо за этот невероятный год. За каждую улыбку, каждое объятие, каждый момент света во тьме. Пусть следующий год принесёт нам ещё больше волшебства. Люблю тебя!",
+    shareBtn: "Запустить фейерверк",
     shareTitle: "Новогодняя открытка для Камилы",
     shareText: "Небольшая новогодняя открытка для Камилы — со снегом, магией и любовью.",
     shareCopied: "Текст скопирован в буфер обмена.",
