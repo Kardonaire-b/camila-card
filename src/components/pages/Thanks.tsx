@@ -52,7 +52,7 @@ export default function Thanks({ t, onRelight }: ThanksProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                 >
-                    {t.thanksTitle} 🎆
+                    {t.thanksTitle}
                 </motion.h2>
 
                 <motion.p
@@ -95,7 +95,6 @@ export default function Thanks({ t, onRelight }: ThanksProps) {
 
                     <span className="relative flex items-center justify-center gap-2">
                         <span>{t.shareBtn}</span>
-                        <span className="text-xl">✨</span>
                     </span>
                 </motion.button>
             </motion.div>

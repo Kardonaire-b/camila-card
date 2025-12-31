@@ -182,7 +182,7 @@ export default function Letter({ t }: LetterProps) {
     useHandwrittenFont();
 
     const targetDate = useMemo(() => {
-        return new Date(Date.UTC(2025, 11, 31, 22, 55, 0)); // FIXME: TEST TIME (1:55 AM Local)
+        return new Date(Date.UTC(2026, 0, 1, 3, 0, 0));
     }, []);
 
     const [timeLeft, setTimeLeft] = useState<{
