@@ -182,7 +182,7 @@ export default function Letter({ t }: LetterProps) {
     useHandwrittenFont();
 
     const targetDate = useMemo(() => {
-        return new Date(Date.UTC(2026, 0, 1, 3, 0, 0));
+        return new Date(Date.UTC(2025, 11, 31, 23, 35, 0)); // 2:35 AM Local Time
     }, []);
 
     const [timeLeft, setTimeLeft] = useState<{
