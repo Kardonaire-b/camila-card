@@ -1,12 +1,24 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
+import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
 
 interface SkyProps {
     t: Translations;
 }
 
+const PARALLAX_AMOUNT = 8; // Max pixels shift for stars
+
+// Haptic feedback helper
+function vibrate(duration: number) {
+    if ('vibrate' in navigator) {
+        navigator.vibrate(duration);
+    }
+}
+
 export default function Sky({ t }: SkyProps) {
+    const { tiltX, tiltY } = useDeviceOrientation();
+
     const heartStars = useMemo(() => [
         { id: 0, x: 50, y: 85 },
         { id: 1, x: 35, y: 65 },
@@ -40,9 +52,11 @@ export default function Sky({ t }: SkyProps) {
 
     const handleStarClick = (starId: number) => {
         if (starId === currentStarIndex && !isComplete) {
+            vibrate(15); // Short haptic on star tap
             setConnectedCount(prev => {
                 const next = prev + 1;
                 if (next >= heartStars.length) {
+                    vibrate(50); // Stronger haptic on completion
                     setTimeout(() => setShowMessage(true), 500);
                 }
                 return next;
@@ -54,6 +68,10 @@ export default function Sky({ t }: SkyProps) {
         setConnectedCount(0);
         setShowMessage(false);
     };
+
+    // Parallax offset for background stars
+    const parallaxX = tiltX * PARALLAX_AMOUNT;
+    const parallaxY = tiltY * PARALLAX_AMOUNT * 0.5;
 
     return (
         <div className="space-y-4">
@@ -70,20 +88,30 @@ export default function Sky({ t }: SkyProps) {
                         boxShadow: 'inset 0 0 60px rgba(100, 100, 200, 0.15)'
                     }}
                 >
-                    {bgStars.map(star => (
-                        <div
-                            key={`bg-${star.id}`}
-                            className="absolute rounded-full bg-white star-twinkle"
-                            style={{
-                                left: `${star.x}%`,
-                                top: `${star.y}%`,
-                                width: star.size,
-                                height: star.size,
-                                opacity: 0.3 + Math.random() * 0.4,
-                                animationDelay: `${star.delay}s`,
-                            }}
-                        />
-                    ))}
+                    {/* Background stars with parallax */}
+                    <div
+                        style={{
+                            position: 'absolute',
+                            inset: -PARALLAX_AMOUNT,
+                            transform: `translate(${parallaxX}px, ${parallaxY}px)`,
+                            transition: 'transform 0.1s ease-out',
+                        }}
+                    >
+                        {bgStars.map(star => (
+                            <div
+                                key={`bg-${star.id}`}
+                                className="absolute rounded-full bg-white star-twinkle"
+                                style={{
+                                    left: `${star.x}%`,
+                                    top: `${star.y}%`,
+                                    width: star.size,
+                                    height: star.size,
+                                    opacity: 0.3 + Math.random() * 0.4,
+                                    animationDelay: `${star.delay}s`,
+                                }}
+                            />
+                        ))}
+                    </div>
 
                     <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
                         {heartStars.slice(0, connectedCount).map((star, i) => {
