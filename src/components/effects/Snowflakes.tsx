@@ -10,10 +10,10 @@ interface Snowflake {
     opacity: number;
 }
 
-const generateSnowflake = (id: string, speedMultiplier = 1): Snowflake => ({
+const generateSnowflake = (id: string, speedMultiplier = 1, maxDelay = 10): Snowflake => ({
     id,
     left: Math.random() * 100,
-    delay: Math.random() * 10,
+    delay: Math.random() * maxDelay,
     duration: (12 + Math.random() * 12) / speedMultiplier,
     size: 6 + Math.random() * 12,
     opacity: 0.4 + Math.random() * 0.5,
@@ -51,9 +51,9 @@ const Snowflakes = React.memo(function Snowflakes() {
             if (magnitude > 20 && now - lastShakeRef.current > 300) {
                 lastShakeRef.current = now;
 
-                // Add bonus snowflakes with faster speed
+                // Add bonus snowflakes with faster speed and less delay
                 const newBonus = Array.from({ length: BONUS_COUNT }).map((_, i) =>
-                    generateSnowflake(`bonus-${now}-${i}`, 1.5)
+                    generateSnowflake(`bonus-${now}-${i}`, 1.5, 2)
                 );
                 setBonusSnowflakes(prev => [...prev, ...newBonus]);
 
@@ -62,10 +62,10 @@ const Snowflakes = React.memo(function Snowflakes() {
                     clearTimeout(bonusTimeoutRef.current);
                 }
 
-                // Remove bonus snowflakes gradually after animation
+                // Remove bonus snowflakes after they finish falling (max duration ~16s + delay 2s = 18s)
                 bonusTimeoutRef.current = window.setTimeout(() => {
                     setBonusSnowflakes([]);
-                }, 4000);
+                }, 20000);
             }
         };
 
