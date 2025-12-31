@@ -3,21 +3,12 @@ import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import Confetti from '../effects/Confetti';
 import handImage from '../../assets/my_hand.png';
+import { useHandwrittenFont } from '../../hooks/useHandwrittenFont';
 
 interface LetterProps {
     t: Translations;
 }
 
-function useHandwrittenFont() {
-    useEffect(() => {
-        const href = "https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Marck+Script&display=swap";
-        if ([...document.styleSheets].some(s => (s.href || "").includes("fonts.googleapis.com"))) return;
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = href;
-        document.head.appendChild(link);
-    }, []);
-}
 
 type Phase = "done" | "active" | "pending";
 
@@ -191,7 +182,7 @@ export default function Letter({ t }: LetterProps) {
     useHandwrittenFont();
 
     const targetDate = useMemo(() => {
-        return new Date(Date.UTC(2026, 0, 1, 3, 0, 0));
+        return new Date(Date.UTC(2025, 11, 31, 22, 55, 0)); // FIXME: TEST TIME (1:55 AM Local)
     }, []);
 
     const [timeLeft, setTimeLeft] = useState<{
