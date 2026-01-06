@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
+import Card from '../ui/Card';
 
 interface SkyProps {
     t: Translations;
@@ -75,12 +76,12 @@ export default function Sky({ t }: SkyProps) {
 
     return (
         <div className="space-y-4">
-            <div className="glass soft-card rounded-3xl p-5">
+            <Card className="p-5">
                 <h2 className="mb-2 text-xl font-semibold text-[var(--ink)]">{t.skyTitle}</h2>
                 <p className="text-[var(--ink)]/90">{t.skyCopy}</p>
-            </div>
+            </Card>
 
-            <div className="glass soft-card rounded-3xl p-4 overflow-hidden">
+            <Card className="p-4 overflow-hidden">
                 <div
                     className="relative w-full aspect-square rounded-2xl overflow-hidden"
                     style={{
@@ -229,7 +230,7 @@ export default function Sky({ t }: SkyProps) {
                         {t.skyHint} ({connectedCount}/{heartStars.length})
                     </p>
                 )}
-            </div>
-        </div>
+            </Card>
+        </div >
     );
 }

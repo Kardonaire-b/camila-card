@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef, forwardRef } from 'react';
+import { useState, useEffect, useMemo, useRef, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import Confetti from '../effects/Confetti';
 import handImage from '../../assets/my_hand.png';
-import { useHandwrittenFont } from '../../hooks/useHandwrittenFont';
+import { LETTER_UNLOCK_DATE } from '../../config';
 
 interface LetterProps {
     t: Translations;
@@ -179,11 +179,8 @@ const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraph
 );
 
 export default function Letter({ t }: LetterProps) {
-    useHandwrittenFont();
 
-    const targetDate = useMemo(() => {
-        return new Date(Date.UTC(2025, 11, 31, 23, 35, 0)); // 2:35 AM Local Time
-    }, []);
+    const targetDate = LETTER_UNLOCK_DATE;
 
     const [timeLeft, setTimeLeft] = useState<{
         days: number;

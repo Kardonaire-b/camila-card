@@ -1,6 +1,7 @@
 
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
+import Card from '../ui/Card';
 
 interface HomeProps {
     t: Translations;
@@ -13,20 +14,21 @@ export default function Home({ t, onStart }: HomeProps) {
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="glass soft-card festive-glow w-full rounded-3xl p-5 text-center"
             >
-                <p className="text-base leading-relaxed text-[var(--ink)]">
-                    {t.homeIntro}
-                </p>
+                <Card festive className="w-full p-5 text-center">
+                    <p className="text-base leading-relaxed text-[var(--ink)]">
+                        {t.homeIntro}
+                    </p>
+                </Card>
             </motion.div>
 
-            <div className="glass soft-card w-full rounded-3xl p-5">
+            <Card className="w-full p-5">
                 <ul className="space-y-2 text-sm text-[var(--ink)]/90">
                     <li>🎁 {t.tipsNav}</li>
                     <li>❄️ {t.tipsHorizon}</li>
                     <li>🌟 {t.tipsLang}</li>
                 </ul>
-            </div>
+            </Card>
 
             <motion.button
                 onClick={onStart}

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 
 // Analytics
@@ -17,12 +17,14 @@ import Snowflakes from './components/effects/Snowflakes';
 import TopBar from './components/layout/TopBar';
 import BottomNav from './components/layout/BottomNav';
 
-// Pages
-import Home from './components/pages/Home';
-import Lighthouse, { type Horizon } from './components/pages/Lighthouse';
-import Letter from './components/pages/Letter';
-import Sky from './components/pages/Sky';
-import Thanks from './components/pages/Thanks';
+// Pages (lazy loaded for better performance)
+const Home = lazy(() => import('./components/pages/Home'));
+const Lighthouse = lazy(() => import('./components/pages/Lighthouse'));
+const Letter = lazy(() => import('./components/pages/Letter'));
+const Sky = lazy(() => import('./components/pages/Sky'));
+const Thanks = lazy(() => import('./components/pages/Thanks'));
+
+export type Horizon = "dawn" | "day" | "sunset" | "night";
 
 const PAGES = ["home", "lighthouse", "letter", "sky", "thanks"] as const;
 type Page = typeof PAGES[number];
@@ -153,9 +155,15 @@ export default function CamilaPostcardV5() {
       />
 
       <main className="relative z-[2] w-full max-w-md flex-1 px-4 pt-20 pb-[calc(90px+env(safe-area-inset-bottom,0))]">
-        <AnimatePresence mode="wait" initial={false}>
-          {renderPage()}
-        </AnimatePresence>
+        <Suspense fallback={
+          <div className="flex items-center justify-center h-40">
+            <div className="animate-pulse text-[var(--ink)]/60">✨</div>
+          </div>
+        }>
+          <AnimatePresence mode="wait" initial={false}>
+            {renderPage()}
+          </AnimatePresence>
+        </Suspense>
       </main>
 
       <BottomNav t={t} page={page} onNavigate={(p) => navigateTo(p as Page)} />

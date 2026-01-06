@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import Fireworks from '../effects/Fireworks';
 import thanksSketch from '../../assets/my_icon.png';
-import { useHandwrittenFont } from '../../hooks/useHandwrittenFont';
 
 interface ThanksProps {
     t: Translations;
@@ -11,7 +10,6 @@ interface ThanksProps {
 }
 
 export default function Thanks({ t, onRelight }: ThanksProps) {
-    useHandwrittenFont();
     const [showFireworks, setShowFireworks] = useState(false);
 
     const handleFireworks = () => {

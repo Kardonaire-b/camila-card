@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { trackVisitor } from '../utils/visitorAnalytics';
+import { trackVisitor } from '../utils/analytics';
 
 /**
  * Hook для отслеживания посетителей

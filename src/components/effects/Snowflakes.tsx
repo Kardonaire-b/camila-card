@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
+import { SNOWFLAKE_BASE_COUNT, SNOWFLAKE_BONUS_COUNT, SNOWFLAKE_PARALLAX_AMOUNT } from '../../config';
 
 interface Snowflake {
     id: string;
@@ -19,26 +20,21 @@ const generateSnowflake = (id: string, speedMultiplier = 1, maxDelay = 10): Snow
     opacity: 0.4 + Math.random() * 0.5,
 });
 
-const BASE_COUNT = 60;
-const BONUS_COUNT = 40;
-const PARALLAX_AMOUNT = 15; // Max pixels shift
+// Generate base snowflakes once, outside component
+const createInitialSnowflakes = () =>
+    Array.from({ length: SNOWFLAKE_BASE_COUNT }).map((_, i) =>
+        generateSnowflake(`base-${i}`)
+    );
 
 const Snowflakes = React.memo(function Snowflakes() {
     // Parallax from device orientation
     const { tiltX, tiltY } = useDeviceOrientation();
 
-    // Base snowflakes - generated once and never change
-    const baseSnowflakesRef = useRef<Snowflake[]>([]);
+    // Base snowflakes - generated once using useMemo
+    const baseSnowflakes = useMemo(() => createInitialSnowflakes(), []);
     const [bonusSnowflakes, setBonusSnowflakes] = useState<Snowflake[]>([]);
     const lastShakeRef = useRef(0);
     const bonusTimeoutRef = useRef<number | null>(null);
-
-    // Initialize base snowflakes only once
-    if (baseSnowflakesRef.current.length === 0) {
-        baseSnowflakesRef.current = Array.from({ length: BASE_COUNT }).map((_, i) =>
-            generateSnowflake(`base-${i}`)
-        );
-    }
 
     useEffect(() => {
         const handleMotion = (e: DeviceMotionEvent) => {
@@ -52,7 +48,7 @@ const Snowflakes = React.memo(function Snowflakes() {
                 lastShakeRef.current = now;
 
                 // Add bonus snowflakes with faster speed and less delay
-                const newBonus = Array.from({ length: BONUS_COUNT }).map((_, i) =>
+                const newBonus = Array.from({ length: SNOWFLAKE_BONUS_COUNT }).map((_, i) =>
                     generateSnowflake(`bonus-${now}-${i}`, 1.5, 2)
                 );
                 setBonusSnowflakes(prev => [...prev, ...newBonus]);
@@ -93,11 +89,11 @@ const Snowflakes = React.memo(function Snowflakes() {
         };
     }, []);
 
-    const allSnowflakes = [...baseSnowflakesRef.current, ...bonusSnowflakes];
+    const allSnowflakes = [...baseSnowflakes, ...bonusSnowflakes];
 
     // Calculate parallax offset
-    const parallaxX = tiltX * PARALLAX_AMOUNT;
-    const parallaxY = tiltY * PARALLAX_AMOUNT * 0.5; // Less vertical shift
+    const parallaxX = tiltX * SNOWFLAKE_PARALLAX_AMOUNT;
+    const parallaxY = tiltY * SNOWFLAKE_PARALLAX_AMOUNT * 0.5; // Less vertical shift
 
     return (
         <div
