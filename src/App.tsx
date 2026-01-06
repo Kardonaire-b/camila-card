@@ -1,6 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 
+// Analytics
+import { useVisitorTracking } from './hooks/useVisitorTracking';
+
 // Styles
 import './styles/animations.css';
 
@@ -60,6 +63,9 @@ function PageWrap({ children, direction, onSwipe }: PageWrapProps) {
 }
 
 export default function CamilaPostcardV5() {
+  // Visitor analytics - runs once per session
+  useVisitorTracking();
+
   const [lang, setLang] = useState<Lang>((localStorage.getItem('lang') as Lang) ?? 'ru');
   const [horizon, setHorizon] = useState<Horizon>("night");
   const [page, setPage] = useState<Page>("home");
