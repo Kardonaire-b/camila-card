@@ -2,6 +2,8 @@
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import Card from '../ui/Card';
+import ScratchCard from '../ui/ScratchCard';
+import DaysCounter from '../ui/DaysCounter';
 
 interface HomeProps {
     t: Translations;
@@ -22,13 +24,9 @@ export default function Home({ t, onStart }: HomeProps) {
                 </Card>
             </motion.div>
 
-            <Card className="w-full p-5">
-                <ul className="space-y-2 text-sm text-[var(--ink)]/90">
-                    <li>🎁 {t.tipsNav}</li>
-                    <li>❄️ {t.tipsHorizon}</li>
-                    <li>🌟 {t.tipsLang}</li>
-                </ul>
-            </Card>
+            <ScratchCard t={t}>
+                <DaysCounter t={t} />
+            </ScratchCard>
 
             <motion.button
                 onClick={onStart}

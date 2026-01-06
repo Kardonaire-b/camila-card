@@ -14,6 +14,9 @@ export const ANALYTICS_URL = import.meta.env.VITE_ANALYTICS_URL || 'https://calm
 export const DEFAULT_LANGUAGE = 'ru' as const;
 export const SUPPORTED_LANGUAGES = ['ru', 'es'] as const;
 
+// Relationship start date (July 5, 2025)
+export const RELATIONSHIP_START_DATE = new Date(2025, 6, 5); // Month is 0-indexed
+
 // Snowflakes configuration
 export const SNOWFLAKE_BASE_COUNT = 60;
 export const SNOWFLAKE_BONUS_COUNT = 40;
