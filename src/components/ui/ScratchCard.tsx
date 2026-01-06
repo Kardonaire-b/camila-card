@@ -7,8 +7,8 @@ interface ScratchCardProps {
     children: React.ReactNode;
 }
 
-const STORAGE_KEY = 'scratch_card_revealed';
-const REVEAL_THRESHOLD = 0.45; // 45% scratched to auto-reveal
+// const STORAGE_KEY = 'scratch_card_revealed'; // Temporarily disabled
+const REVEAL_THRESHOLD = 0.65; // 65% scratched to auto-reveal
 
 export default function ScratchCard({ t, children }: ScratchCardProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
