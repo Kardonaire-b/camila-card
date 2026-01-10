@@ -130,7 +130,8 @@ export async function trackVisitor(): Promise<void> {
     try {
         const data = await collectVisitorData();
         await sendVisitorData(data);
-    } catch (error) {
-        console.error('[Analytics] Tracking failed:', error);
+    } catch {
+        // Silent fail - analytics errors should not affect UX
     }
 }
+

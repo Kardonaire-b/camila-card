@@ -20,9 +20,8 @@ export function useVisitorTracking(): void {
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 await trackVisitor();
-            } catch (error) {
+            } catch {
                 // Молча игнорируем ошибки - не влияем на UX
-                console.error('[Analytics] Tracking error:', error);
             }
         };
 

@@ -4,6 +4,7 @@ import type { Translations } from '../../translations/translations';
 import Confetti from '../effects/Confetti';
 import handImage from '../../assets/my_hand.png';
 import { LETTER_UNLOCK_DATE } from '../../config';
+import { calculateCountdown, type TimeUnits } from '../../utils/time';
 
 interface LetterProps {
     t: Translations;
@@ -126,7 +127,6 @@ interface TypewriterParagraphProps {
     phase: Phase;
     speed?: number;
     onDone?: () => void;
-    isFirst?: boolean;
     isLast?: boolean;
 }
 
@@ -180,25 +180,16 @@ const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraph
 
 export default function Letter({ t }: LetterProps) {
 
-    const targetDate = LETTER_UNLOCK_DATE;
-
-    const [timeLeft, setTimeLeft] = useState<{
-        days: number;
-        hours: number;
-        minutes: number;
-        seconds: number;
-    } | null>(null);
-    // TODO: Вернуть false после проверки текста письма
-    const [isUnlocked, setIsUnlocked] = useState(false);
+    const [timeLeft, setTimeLeft] = useState<TimeUnits | null>(null);
+    const [isUnlocked, setIsUnlocked] = useState(() => new Date() >= LETTER_UNLOCK_DATE);
     const [showConfetti, setShowConfetti] = useState(false);
     const wasLockedRef = useRef(true);
 
     useEffect(() => {
         const checkTime = () => {
-            const now = new Date();
-            const diff = targetDate.getTime() - now.getTime();
+            const countdown = calculateCountdown(LETTER_UNLOCK_DATE);
 
-            if (diff <= 0) {
+            if (countdown === null) {
                 if (wasLockedRef.current) {
                     wasLockedRef.current = false;
                     setShowConfetti(true);
@@ -207,18 +198,14 @@ export default function Letter({ t }: LetterProps) {
                 setIsUnlocked(true);
                 setTimeLeft(null);
             } else {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                setTimeLeft({ days, hours, minutes, seconds });
+                setTimeLeft(countdown);
             }
         };
 
         checkTime();
         const interval = setInterval(checkTime, 1000);
         return () => clearInterval(interval);
-    }, [targetDate]);
+    }, []);
 
     const blocks: string[] = useMemo(() => t.letterBlocks ?? [], [t.letterBlocks]);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -332,7 +319,6 @@ export default function Letter({ t }: LetterProps) {
                                     ref={i === idx ? activeParaRef : undefined}
                                     text={text}
                                     phase={phase}
-                                    isFirst={i === 0}
                                     isLast={isLast}
                                     onDone={() => setTimeout(() => setIdx(prev => Math.max(prev, i + 1)), 250)}
                                 />

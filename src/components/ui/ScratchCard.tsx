@@ -1,23 +1,19 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
+import { hapticPatterns } from '../../utils/haptic';
 
 interface ScratchCardProps {
     t: Translations;
     children: React.ReactNode;
 }
 
-// const STORAGE_KEY = 'scratch_card_revealed'; // Temporarily disabled
 const REVEAL_THRESHOLD = 0.65; // 65% scratched to auto-reveal
 
 export default function ScratchCard({ t, children }: ScratchCardProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [isRevealed, setIsRevealed] = useState(false);
-    // Temporarily disabled localStorage:
-    // const [isRevealed, setIsRevealed] = useState(() => {
-    //     return localStorage.getItem(STORAGE_KEY) === 'true';
-    // });
     const [isScratching, setIsScratching] = useState(false);
     const lastPosRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -103,15 +99,12 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
         lastPosRef.current = { x: canvasX, y: canvasY };
 
         // Haptic feedback (gentle vibration)
-        if (navigator.vibrate) {
-            navigator.vibrate(5);
-        }
+        hapticPatterns.tap();
 
         // Check if enough is scratched
         const percentage = calculateScratchPercentage();
         if (percentage > REVEAL_THRESHOLD) {
             setIsRevealed(true);
-            // localStorage.setItem(STORAGE_KEY, 'true'); // Temporarily disabled
         }
     }, [calculateScratchPercentage]);
 

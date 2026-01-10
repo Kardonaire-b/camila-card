@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
-import { SNOWFLAKE_BASE_COUNT, SNOWFLAKE_BONUS_COUNT, SNOWFLAKE_PARALLAX_AMOUNT } from '../../config';
+import {
+    SNOWFLAKE_BASE_COUNT,
+    SNOWFLAKE_BONUS_COUNT,
+    SNOWFLAKE_PARALLAX_AMOUNT,
+    SHAKE_MAGNITUDE_THRESHOLD,
+    SHAKE_DEBOUNCE_MS,
+    BONUS_SNOWFLAKE_CLEANUP_MS
+} from '../../config';
 
 interface Snowflake {
     id: string;
@@ -44,7 +51,7 @@ const Snowflakes = React.memo(function Snowflakes() {
             const magnitude = Math.sqrt(acc.x ** 2 + acc.y ** 2 + acc.z ** 2);
             const now = Date.now();
 
-            if (magnitude > 20 && now - lastShakeRef.current > 300) {
+            if (magnitude > SHAKE_MAGNITUDE_THRESHOLD && now - lastShakeRef.current > SHAKE_DEBOUNCE_MS) {
                 lastShakeRef.current = now;
 
                 // Add bonus snowflakes with faster speed and less delay
@@ -58,10 +65,10 @@ const Snowflakes = React.memo(function Snowflakes() {
                     clearTimeout(bonusTimeoutRef.current);
                 }
 
-                // Remove bonus snowflakes after they finish falling (max duration ~16s + delay 2s = 18s)
+                // Remove bonus snowflakes after they finish falling
                 bonusTimeoutRef.current = window.setTimeout(() => {
                     setBonusSnowflakes([]);
-                }, 20000);
+                }, BONUS_SNOWFLAKE_CLEANUP_MS);
             }
         };
 

@@ -21,3 +21,12 @@ export const RELATIONSHIP_START_DATE = new Date(2025, 6, 5); // Month is 0-index
 export const SNOWFLAKE_BASE_COUNT = 60;
 export const SNOWFLAKE_BONUS_COUNT = 40;
 export const SNOWFLAKE_PARALLAX_AMOUNT = 15;
+
+// Shake detection configuration
+export const SHAKE_MAGNITUDE_THRESHOLD = 20;
+export const SHAKE_DEBOUNCE_MS = 300;
+export const BONUS_SNOWFLAKE_CLEANUP_MS = 20000;
+
+// Work schedule start date (January 11, 2026 - first day shift)
+export const SCHEDULE_START_DATE = new Date(2026, 0, 11); // Month is 0-indexed
+

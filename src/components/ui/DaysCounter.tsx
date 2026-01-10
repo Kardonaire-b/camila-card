@@ -2,28 +2,14 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RELATIONSHIP_START_DATE } from '../../config';
 import type { Translations } from '../../translations/translations';
+import { calculateTimeDiff, type TimeUnits } from '../../utils/time';
 
 interface DaysCounterProps {
     t: Translations;
 }
 
-interface TimeUnits {
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-}
-
 function calculateTime(): TimeUnits {
-    const now = new Date();
-    const diff = now.getTime() - RELATIONSHIP_START_DATE.getTime();
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    return { days, hours, minutes, seconds };
+    return calculateTimeDiff(RELATIONSHIP_START_DATE);
 }
 
 function AnimatedNumber({ value, label }: { value: number; label: string }) {

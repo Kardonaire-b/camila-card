@@ -22,11 +22,12 @@ const Home = lazy(() => import('./components/pages/Home'));
 const Lighthouse = lazy(() => import('./components/pages/Lighthouse'));
 const Letter = lazy(() => import('./components/pages/Letter'));
 const Sky = lazy(() => import('./components/pages/Sky'));
+const Schedule = lazy(() => import('./components/pages/Schedule'));
 const Thanks = lazy(() => import('./components/pages/Thanks'));
 
 export type Horizon = "dawn" | "day" | "sunset" | "night";
 
-const PAGES = ["home", "lighthouse", "letter", "sky", "thanks"] as const;
+const PAGES = ["home", "lighthouse", "letter", "sky", "schedule", "thanks"] as const;
 type Page = typeof PAGES[number];
 
 const SWIPE_THRESHOLD = 50;
@@ -132,6 +133,12 @@ export default function CamilaPostcardV5() {
         return (
           <PageWrap key="sky" {...props}>
             <Sky t={t} />
+          </PageWrap>
+        );
+      case "schedule":
+        return (
+          <PageWrap key="schedule" {...props}>
+            <Schedule t={t} />
           </PageWrap>
         );
       case "thanks":

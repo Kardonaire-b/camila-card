@@ -30,8 +30,8 @@ export default function Lighthouse({ t, horizon, setHorizon }: LighthouseProps) 
         try {
             if (a.paused) { await a.play(); setPlaying(true); }
             else { a.pause(); setPlaying(false); }
-        } catch (e) {
-            console.warn("Audio error:", e);
+        } catch {
+            // Silent fail - audio errors should not affect UX
         }
     };
 

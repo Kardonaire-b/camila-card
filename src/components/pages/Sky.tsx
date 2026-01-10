@@ -3,19 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
 import Card from '../ui/Card';
+import { hapticPatterns } from '../../utils/haptic';
 
 interface SkyProps {
     t: Translations;
 }
 
 const PARALLAX_AMOUNT = 8; // Max pixels shift for stars
-
-// Haptic feedback helper
-function vibrate(duration: number) {
-    if ('vibrate' in navigator) {
-        navigator.vibrate(duration);
-    }
-}
 
 export default function Sky({ t }: SkyProps) {
     const { tiltX, tiltY } = useDeviceOrientation();
@@ -53,11 +47,11 @@ export default function Sky({ t }: SkyProps) {
 
     const handleStarClick = (starId: number) => {
         if (starId === currentStarIndex && !isComplete) {
-            vibrate(15); // Short haptic on star tap
+            hapticPatterns.short(); // Short haptic on star tap
             setConnectedCount(prev => {
                 const next = prev + 1;
                 if (next >= heartStars.length) {
-                    vibrate(50); // Stronger haptic on completion
+                    hapticPatterns.medium(); // Stronger haptic on completion
                     setTimeout(() => setShowMessage(true), 500);
                 }
                 return next;

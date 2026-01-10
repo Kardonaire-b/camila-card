@@ -1,5 +1,5 @@
 
-import { Home as HomeIcon, Signal, Mail, Stars, Gift } from 'lucide-react';
+import { Home as HomeIcon, Signal, Mail, Stars, Calendar, Gift } from 'lucide-react';
 import type { Translations } from '../../translations/translations';
 
 interface BottomNavProps {
@@ -14,13 +14,14 @@ export default function BottomNav({ t, page, onNavigate }: BottomNavProps) {
         { key: "lighthouse", label: t.navLighthouse, icon: <Signal className="h-5 w-5" strokeWidth={1.5} /> },
         { key: "letter", label: t.navLetter, icon: <Mail className="h-5 w-5" strokeWidth={1.5} /> },
         { key: "sky", label: t.navSky, icon: <Stars className="h-5 w-5" strokeWidth={1.5} /> },
+        { key: "schedule", label: t.navSchedule, icon: <Calendar className="h-5 w-5" strokeWidth={1.5} /> },
         { key: "thanks", label: t.navThanks, icon: <Gift className="h-5 w-5" strokeWidth={1.5} /> },
     ];
 
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-10">
             <div className="mx-auto max-w-md px-4" style={{ paddingBottom: "calc(16px + env(safe-area-inset-bottom,0))" }}>
-                <div className="glass soft-card grid grid-cols-5 gap-1 rounded-2xl p-2">
+                <div className="glass soft-card grid grid-cols-6 gap-1 rounded-2xl p-2">
                     {items.map(it => (
                         <button
                             key={it.key}
