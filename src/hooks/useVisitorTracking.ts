@@ -2,26 +2,26 @@ import { useEffect, useRef } from 'react';
 import { trackVisitor } from '../utils/analytics';
 
 /**
- * Hook для отслеживания посетителей
- * Выполняется при каждой загрузке страницы
+ * Hook for tracking visitors
+ * Runs once per page load
  */
 export function useVisitorTracking(): void {
     const hasTracked = useRef(false);
 
     useEffect(() => {
-        // Предотвращаем повторное выполнение в strict mode
+        // Prevent duplicate execution in strict mode
         if (hasTracked.current) return;
         hasTracked.current = true;
 
-        // Запускаем трекинг асинхронно, чтобы не блокировать рендеринг
+        // Run tracking asynchronously to not block rendering
         const runTracking = async () => {
             try {
-                // Небольшая задержка чтобы страница успела загрузиться
+                // Small delay to let the page fully load
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 await trackVisitor();
             } catch {
-                // Молча игнорируем ошибки - не влияем на UX
+                // Silently ignore errors - don't affect UX
             }
         };
 

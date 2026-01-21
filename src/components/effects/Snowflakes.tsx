@@ -1,5 +1,12 @@
+/**
+ * Snowflakes Effect Component
+ * Animated snowfall with parallax based on device orientation
+ * Supports shake-to-add-more-snowflakes on mobile devices
+ */
+
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
+import { hasMotionPermissionAPI, requestMotionPermission } from '../../types/device-events';
 import {
     SNOWFLAKE_BASE_COUNT,
     SNOWFLAKE_BONUS_COUNT,
@@ -73,13 +80,13 @@ const Snowflakes = React.memo(function Snowflakes() {
         };
 
         const requestPermission = async () => {
-            if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
+            if (hasMotionPermissionAPI()) {
                 try {
-                    const permission = await (DeviceMotionEvent as any).requestPermission();
+                    const permission = await requestMotionPermission();
                     if (permission === 'granted') {
                         window.addEventListener('devicemotion', handleMotion);
                     }
-                } catch (e) {
+                } catch {
                     console.warn('DeviceMotion permission denied');
                 }
             } else {

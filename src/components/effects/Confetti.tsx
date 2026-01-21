@@ -1,6 +1,12 @@
+/**
+ * Confetti Effect Component
+ * Colorful falling confetti particles for celebrations
+ */
+
 import { useMemo } from 'react';
 
 interface ConfettiProps {
+    /** Whether the confetti should be visible and animating */
     active: boolean;
 }
 

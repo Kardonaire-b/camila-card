@@ -1,4 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+/**
+ * Lighthouse Page Component
+ * Interactive lighthouse scene with time-of-day controls and audio
+ */
+
+import { useState, useEffect, useRef, memo } from 'react';
 import type { Translations } from '../../translations/translations';
 import type { Horizon } from '../../App';
 import LighthouseSVG from '../svg/LighthouseSVG';
@@ -6,8 +11,11 @@ import Card from '../ui/Card';
 import songUrl from '../../assets/audio/melody.mp3';
 
 interface LighthouseProps {
+    /** Translation strings */
     t: Translations;
+    /** Current time of day */
     horizon: Horizon;
+    /** Callback to change time of day */
     setHorizon: (h: Horizon) => void;
 }
 
@@ -75,7 +83,11 @@ export default function Lighthouse({ t, horizon, setHorizon }: LighthouseProps) 
     );
 }
 
-function HorizonChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+/**
+ * HorizonChip - Toggle button for time-of-day selection
+ * Memoized to prevent unnecessary re-renders
+ */
+const HorizonChip = memo(function HorizonChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
     return (
         <button
             onClick={onClick}
@@ -86,4 +98,4 @@ function HorizonChip({ label, active, onClick }: { label: string; active: boolea
             {label}
         </button>
     );
-}
+});

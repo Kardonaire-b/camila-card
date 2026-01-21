@@ -1,69 +1,93 @@
-# React + TypeScript + Vite
+# 🌸 Для Моего Солнышка 💕
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+*Персональная интерактивная открытка с любовью и теплом*
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Что это такое?
 
-## Expanding the ESLint configuration
+Это волшебное веб-приложение — интерактивная открытка, созданная со всей любовью! Здесь есть маяк, который меняет время суток, новогоднее письмо, падающие снежинки и многое другое 🌟
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🎀 Особенности
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 🏠 **Главная страница** — уютное приветствие с красивыми анимациями
+- 🏮 **Маяк** — интерактивный маяк со сменой времени суток (рассвет, день, закат, ночь)
+- 💌 **Письмо** — новогоднее послание (открывается в нужное время!)
+- 🌌 **Небо** — страница со звёздами и мечтами
+- 📅 **Расписание** — удобный график смен
+- 🙏 **Благодарности** — финальная страница с любовью
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 🌨️ Волшебные эффекты
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- ❄️ Падающие снежинки с параллаксом
+- 📱 Встряхни телефон — появятся дополнительные снежинки!
+- 🎨 Плавные переходы между страницами
+- 👆 Свайп для навигации между страницами
+
+### 🌍 Языки
+
+- 🇷🇺 Русский  
+- 🇦🇷 Español
+
+---
+
+## 🛠️ Технологии
+
+| 💜 | Технология |
+|:---:|:---|
+| ⚛️ | React 19 |
+| 📘 | TypeScript |
+| ⚡ | Vite |
+| 🎭 | Framer Motion |
+| 🎨 | TailwindCSS 4 |
+| ✨ | Lucide Icons |
+
+---
+
+## 🚀 Запуск
+
+```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+
+# Сборка для продакшена
+npm run build
+
+# Предпросмотр сборки
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📁 Структура проекта
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── 📄 App.tsx           # Главный компонент приложения
+├── ⚙️ config.ts         # Конфигурация (даты, настройки)
+├── 🧩 components/
+│   ├── effects/         # Визуальные эффекты (снежинки)
+│   ├── layout/          # Верхняя панель и навигация
+│   ├── pages/           # Все страницы приложения
+│   ├── svg/             # SVG-компоненты
+│   └── ui/              # UI-компоненты
+├── 🪝 hooks/            # React хуки
+├── 🎨 styles/           # CSS анимации
+├── 🌐 translations/     # Переводы (RU/ES)
+└── 🔧 utils/            # Утилиты
+```
+
+---
+
+## 💖 Сделано с любовью
+
+Каждая строчка кода написана с теплом и заботой 🌷
+
+*Для моего самого любимого человечка* 💕
+
+---
+
+> 🌙 *«Ты — моё солнышко в любое время суток»* ✨

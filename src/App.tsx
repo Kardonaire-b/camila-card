@@ -1,3 +1,8 @@
+/**
+ * Main Application Component
+ * Multi-page greeting card with swipe navigation and dynamic theming
+ */
+
 import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 
@@ -25,7 +30,16 @@ const Sky = lazy(() => import('./components/pages/Sky'));
 const Schedule = lazy(() => import('./components/pages/Schedule'));
 const Thanks = lazy(() => import('./components/pages/Thanks'));
 
+/** Time of day theme options */
 export type Horizon = "dawn" | "day" | "sunset" | "night";
+
+/** Color palettes for each time of day */
+const PALETTES: Record<Horizon, [string, string]> = {
+  dawn: ["#e8d5e7", "#c5cae9"],
+  day: ["#cce5ff", "#e3f2fd"],
+  sunset: ["#ffcccb", "#ffd1dc"],
+  night: ["#1a1a2e", "#16213e"],
+};
 
 const PAGES = ["home", "lighthouse", "letter", "sky", "schedule", "thanks"] as const;
 type Page = typeof PAGES[number];
@@ -76,15 +90,14 @@ export default function CamilaPostcardV5() {
 
   const t = useMemo(() => translations[lang], [lang]);
 
-  const palettes = {
-    dawn: ["#e8d5e7", "#c5cae9"],
-    day: ["#cce5ff", "#e3f2fd"],
-    sunset: ["#ffcccb", "#ffd1dc"],
-    night: ["#1a1a2e", "#16213e"],
-  };
+  const bg = useMemo(() => `linear-gradient(to top, ${PALETTES[horizon][0]}, ${PALETTES[horizon][1]})`, [horizon]);
 
-  const bg = useMemo(() => `linear-gradient(to top, ${palettes[horizon][0]}, ${palettes[horizon][1]})`, [horizon]);
+  // Sync language to localStorage
+  useEffect(() => {
+    localStorage.setItem('lang', lang);
+  }, [lang]);
 
+  // Update CSS variables based on horizon
   useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty("--glass", horizon === "night" ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.75)");
@@ -152,6 +165,14 @@ export default function CamilaPostcardV5() {
 
   return (
     <div className="min-h-dvh w-full flex flex-col items-center relative overflow-x-hidden" style={{ background: bg }}>
+      {/* Skip to content link for keyboard navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded-lg focus:shadow-lg"
+      >
+        Skip to content
+      </a>
+
       <Snowflakes />
 
       <TopBar
@@ -161,7 +182,7 @@ export default function CamilaPostcardV5() {
         ariaLabel={lang === "es" ? t.a11y.switchToRU : t.a11y.switchToES}
       />
 
-      <main className="relative z-[2] w-full max-w-md flex-1 px-4 pt-20 pb-[calc(90px+env(safe-area-inset-bottom,0))]">
+      <main id="main-content" className="relative z-[2] w-full max-w-md flex-1 px-4 pt-20 pb-[calc(90px+env(safe-area-inset-bottom,0))]">
         <Suspense fallback={
           <div className="flex items-center justify-center h-40">
             <div className="animate-pulse text-[var(--ink)]/60">✨</div>

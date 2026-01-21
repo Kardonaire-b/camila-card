@@ -1,14 +1,23 @@
+/**
+ * ScratchCard Component
+ * Interactive scratch-to-reveal card with canvas-based scratch layer
+ * Auto-reveals when 65% of the surface is scratched
+ */
+
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import { hapticPatterns } from '../../utils/haptic';
 
 interface ScratchCardProps {
+    /** Translation strings */
     t: Translations;
+    /** Content to reveal under the scratch layer */
     children: React.ReactNode;
 }
 
-const REVEAL_THRESHOLD = 0.65; // 65% scratched to auto-reveal
+/** Percentage of scratched area required to auto-reveal */
+const REVEAL_THRESHOLD = 0.65;
 
 export default function ScratchCard({ t, children }: ScratchCardProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);

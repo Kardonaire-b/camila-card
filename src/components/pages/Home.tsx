@@ -1,3 +1,7 @@
+/**
+ * Home Page Component
+ * Landing page with greeting card, scratch-to-reveal counter, and start button
+ */
 
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
@@ -6,7 +10,9 @@ import ScratchCard from '../ui/ScratchCard';
 import DaysCounter from '../ui/DaysCounter';
 
 interface HomeProps {
+    /** Translation strings */
     t: Translations;
+    /** Callback when user clicks to start the experience */
     onStart: () => void;
 }
 

@@ -1,3 +1,8 @@
+/**
+ * Letter Page Component
+ * Time-locked letter with typewriter effect and countdown timer
+ */
+
 import { useState, useEffect, useMemo, useRef, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
@@ -7,20 +12,21 @@ import { LETTER_UNLOCK_DATE } from '../../config';
 import { calculateCountdown, type TimeUnits } from '../../utils/time';
 
 interface LetterProps {
+    /** Translation strings */
     t: Translations;
 }
 
 
 type Phase = "done" | "active" | "pending";
 
-// Тип сегмента: обычный текст или форматированный
+/** Text segment type: plain text or formatted */
 type TextSegment =
     | { type: 'plain'; text: string }
     | { type: 'bold'; text: string }
     | { type: 'italic'; text: string }
     | { type: 'highlight'; text: string };
 
-// Парсер текста в сегменты без рендеринга
+/** Parses text into segments without rendering */
 function parseTextToSegments(text: string): TextSegment[] {
     const segments: TextSegment[] = [];
     let remaining = text;
@@ -63,7 +69,7 @@ function parseTextToSegments(text: string): TextSegment[] {
     return segments;
 }
 
-// Рендер сегментов с учётом количества показанных символов
+/** Renders segments with respect to visible character count */
 function renderSegmentsWithLength(segments: TextSegment[], visibleLength: number): React.ReactNode[] {
     const result: React.ReactNode[] = [];
     let consumed = 0;
@@ -109,12 +115,12 @@ function renderSegmentsWithLength(segments: TextSegment[], visibleLength: number
     return result;
 }
 
-// Получить общую длину "видимого" текста (без разметки)
+/** Gets total visible text length (without markup) */
 function getVisibleTextLength(segments: TextSegment[]): number {
     return segments.reduce((acc, seg) => acc + seg.text.length, 0);
 }
 
-// Мерцающий курсор
+/** Blinking cursor component */
 const BlinkingCursor = () => (
     <span
         className="inline-block w-[2px] h-[1.2em] ml-[1px] align-middle animate-pulse"
@@ -132,7 +138,7 @@ interface TypewriterParagraphProps {
 
 const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraphProps>(
     ({ text, phase, speed = 65, onDone, isLast }, ref) => {
-        // Парсим текст в сегменты один раз
+        // Parse text into segments once
         const segments = useMemo(() => parseTextToSegments(text), [text]);
         const totalVisibleLength = useMemo(() => getVisibleTextLength(segments), [segments]);
 
@@ -163,7 +169,7 @@ const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraph
         const isTyping = phase === "active" && len < totalVisibleLength;
         const isDone = phase === "done";
 
-        // Определяем, является ли это подписью (последний параграф)
+        // Check if this is the signature (last paragraph)
         const isSignature = isLast && isDone;
 
         return (
@@ -211,19 +217,19 @@ export default function Letter({ t }: LetterProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const activeParaRef = useRef<HTMLParagraphElement>(null);
 
-    // Ключ для сохранения прогресса в localStorage
+    // Key for saving progress in localStorage
     const storageKey = 'letter-progress-idx';
 
-    // Загружаем сохранённый прогресс при монтировании
+    // Load saved progress on mount
     const [idx, setIdx] = useState(() => {
         if (typeof window === 'undefined') return 0;
 
-        // Проверяем режим уменьшенной анимации
+        // Check for reduced motion preference
         if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
             return blocks.length;
         }
 
-        // Пытаемся восстановить прогресс из localStorage
+        // Try to restore progress from localStorage
         const saved = localStorage.getItem(storageKey);
         if (saved !== null) {
             const savedIdx = parseInt(saved, 10);
@@ -234,12 +240,12 @@ export default function Letter({ t }: LetterProps) {
         return 0;
     });
 
-    // Сохраняем прогресс при изменении idx
+    // Save progress when idx changes
     useEffect(() => {
         localStorage.setItem(storageKey, String(idx));
     }, [idx]);
 
-    // Автоскролл за активным параграфом
+    // Auto-scroll to active paragraph
     useEffect(() => {
         if (activeParaRef.current && scrollContainerRef.current) {
             activeParaRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -292,7 +298,7 @@ export default function Letter({ t }: LetterProps) {
         );
     }
 
-    // Проверяем, завершено ли письмо
+    // Check if letter is complete
     const isLetterComplete = idx >= blocks.length;
 
     return (
@@ -326,7 +332,7 @@ export default function Letter({ t }: LetterProps) {
                         })}
                     </div>
 
-                    {/* Декоративные элементы после завершения письма */}
+                    {/* Decorative elements after letter completion */}
                     {isLetterComplete && (
                         <motion.div
                             className="letter-complete-decoration flex flex-col items-center mt-6 space-y-4"

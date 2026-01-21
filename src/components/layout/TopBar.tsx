@@ -1,9 +1,16 @@
-
+/**
+ * TopBar Component
+ * Fixed header with app title and language toggle button
+ */
 
 interface TopBarProps {
+    /** Display title text */
     title: string;
+    /** Current language code (e.g., 'ru', 'es') */
     lang: string;
+    /** Callback to toggle between languages */
     onToggleLang: () => void;
+    /** Accessibility label for the language button */
     ariaLabel: string;
 }
 

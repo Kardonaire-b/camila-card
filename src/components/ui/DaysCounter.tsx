@@ -1,3 +1,8 @@
+/**
+ * DaysCounter Component
+ * Real-time countdown showing days, hours, minutes, seconds since relationship start
+ */
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RELATIONSHIP_START_DATE } from '../../config';
@@ -5,6 +10,7 @@ import type { Translations } from '../../translations/translations';
 import { calculateTimeDiff, type TimeUnits } from '../../utils/time';
 
 interface DaysCounterProps {
+    /** Translation strings */
     t: Translations;
 }
 

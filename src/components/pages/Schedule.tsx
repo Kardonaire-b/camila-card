@@ -1,3 +1,8 @@
+/**
+ * Schedule Page Component
+ * Interactive calendar showing work shift schedule with 2/2 rotation
+ */
+
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
@@ -5,6 +10,7 @@ import Card from '../ui/Card';
 import { SCHEDULE_START_DATE } from '../../config';
 
 interface ScheduleProps {
+    /** Translation strings */
     t: Translations;
 }
 

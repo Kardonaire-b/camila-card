@@ -1,10 +1,17 @@
+/**
+ * BottomNav Component
+ * Fixed bottom navigation bar with page icons and labels
+ */
 
 import { Home as HomeIcon, Signal, Mail, Stars, Calendar, Gift } from 'lucide-react';
 import type { Translations } from '../../translations/translations';
 
 interface BottomNavProps {
+    /** Translation strings */
     t: Translations;
+    /** Current active page key */
     page: string;
+    /** Navigation callback */
     onNavigate: (key: string) => void;
 }
 

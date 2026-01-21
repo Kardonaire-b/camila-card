@@ -1,0 +1,23 @@
+{
+    "name": "Для Моего Солнышка",
+    "short_name": "Солнышко",
+    "description": "Интерактивная новогодняя открытка с любовью и теплом",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#1a1a2e",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/src/assets/my_icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "entertainment",
+        "lifestyle"
+    ],
+    "lang": "ru"
+}

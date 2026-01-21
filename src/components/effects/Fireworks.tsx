@@ -1,7 +1,14 @@
+/**
+ * Fireworks Effect Component
+ * Animated firework explosions with sparks
+ */
+
 import React, { useState, useEffect } from 'react';
 
 interface FireworksProps {
+    /** Whether the fireworks should be visible and animating */
     active: boolean;
+    /** Callback when fireworks animation completes */
     onComplete: () => void;
 }
 

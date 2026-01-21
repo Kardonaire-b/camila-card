@@ -1,3 +1,8 @@
+/**
+ * Thanks Page Component
+ * Final page with gratitude message, image gallery, and fireworks celebration
+ */
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
@@ -5,7 +10,9 @@ import Fireworks from '../effects/Fireworks';
 import thanksSketch from '../../assets/my_icon.png';
 
 interface ThanksProps {
+    /** Translation strings */
     t: Translations;
+    /** Callback to return to lighthouse page */
     onRelight: () => void;
 }
 

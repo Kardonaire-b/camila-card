@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { hasOrientationPermissionAPI, requestOrientationPermission } from '../types/device-events';
 
 interface DeviceOrientation {
     tiltX: number; // -1 to 1 (left-right)
@@ -43,14 +44,14 @@ export function useDeviceOrientation(): DeviceOrientation {
             }
 
             // iOS 13+ requires permission
-            if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+            if (hasOrientationPermissionAPI()) {
                 try {
-                    const permission = await (DeviceOrientationEvent as any).requestPermission();
+                    const permission = await requestOrientationPermission();
                     if (permission === 'granted') {
                         setIsSupported(true);
                         window.addEventListener('deviceorientation', handleOrientation);
                     }
-                } catch (e) {
+                } catch {
                     console.warn('DeviceOrientation permission denied');
                     setIsSupported(false);
                 }
