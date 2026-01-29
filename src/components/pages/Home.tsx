@@ -38,7 +38,7 @@ export default function Home({ t, onStart }: HomeProps) {
                 onClick={onStart}
                 whileTap={{ scale: 0.97 }}
                 whileHover={{ scale: 1.02 }}
-                className="rounded-2xl border border-yellow-300/50 bg-gradient-to-r from-red-500/80 to-green-600/80 px-5 py-3 text-white font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-300/50"
+                className="rounded-2xl border border-pink-300/50 bg-gradient-to-r from-pink-400/80 to-amber-400/80 px-5 py-3 text-white font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-300/50"
                 aria-label={t.a11y.openCard}
             >
                 {t.homeOpen}

@@ -17,15 +17,15 @@ export const SUPPORTED_LANGUAGES = ['ru', 'es'] as const;
 // Relationship start date (July 5, 2025)
 export const RELATIONSHIP_START_DATE = new Date(2025, 6, 5); // Month is 0-indexed
 
-// Snowflakes configuration
-export const SNOWFLAKE_BASE_COUNT = 60;
-export const SNOWFLAKE_BONUS_COUNT = 40;
-export const SNOWFLAKE_PARALLAX_AMOUNT = 15;
+// Petals configuration
+export const PETAL_BASE_COUNT = 45;
+export const PETAL_BONUS_COUNT = 30;
+export const PETAL_PARALLAX_AMOUNT = 12;
 
 // Shake detection configuration
 export const SHAKE_MAGNITUDE_THRESHOLD = 20;
 export const SHAKE_DEBOUNCE_MS = 300;
-export const BONUS_SNOWFLAKE_CLEANUP_MS = 20000;
+export const BONUS_PETAL_CLEANUP_MS = 18000;
 
 // Work schedule start date (January 11, 2026 - first day shift)
 export const SCHEDULE_START_DATE = new Date(2026, 0, 11); // Month is 0-indexed

@@ -42,18 +42,30 @@
     }
 }
 
-/* GPU-accelerated snowfall animation */
-@keyframes snowfall {
+/* GPU-accelerated petal fall animation */
+@keyframes petalfall {
     0% {
-        transform: translateY(-20px) translateZ(0);
+        transform: translateY(-20px) translateZ(0) rotate(var(--rotation, 0deg));
+    }
+
+    25% {
+        transform: translateY(25vh) translateX(15px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 90deg));
+    }
+
+    50% {
+        transform: translateY(50vh) translateX(-10px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 180deg));
+    }
+
+    75% {
+        transform: translateY(75vh) translateX(20px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 270deg));
     }
 
     100% {
-        transform: translateY(100vh) translateZ(0);
+        transform: translateY(100vh) translateX(5px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 360deg));
     }
 }
 
-.snowflakes-container {
+.petals-container {
     position: fixed;
     inset: 0;
     pointer-events: none;
@@ -61,15 +73,15 @@
     z-index: 1;
 }
 
-.snowflake {
+.petal {
     position: absolute;
-    top: -20px;
-    color: white;
-    animation-name: snowfall;
-    animation-timing-function: linear;
+    top: -30px;
+    animation-name: petalfall;
+    animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
     will-change: transform;
     backface-visibility: hidden;
+    filter: drop-shadow(0 2px 4px rgba(255, 150, 180, 0.3));
 }
 
 /* Wave animation */
@@ -274,8 +286,8 @@
 }
 
 .festive-glow {
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4), 0 0 50px rgba(255, 100, 100, 0.25), 0 10px 30px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 25px rgba(255, 182, 193, 0.4), 0 0 50px rgba(255, 180, 150, 0.25), 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 182, 193, 0.3);
 }
 
 /* Better text contrast on dark mode */
@@ -592,4 +604,126 @@
     50% {
         box-shadow: 0 0 8px 3px rgba(255, 215, 0, 0.5);
     }
+}
+
+/* History page styles - collaborative story */
+.history-book {
+    background: linear-gradient(135deg, rgba(255, 253, 245, 0.95) 0%, rgba(255, 248, 240, 0.9) 100%);
+    box-shadow:
+        0 10px 40px rgba(139, 69, 19, 0.15),
+        inset 0 0 60px rgba(210, 180, 140, 0.1);
+    border: 1px solid rgba(210, 180, 140, 0.3);
+}
+
+.story-chapter {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.story-ilya {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(99, 102, 241, 0.05) 100%);
+    border-left: 3px solid rgba(59, 130, 246, 0.5);
+}
+
+.story-camila {
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.08) 0%, rgba(251, 146, 60, 0.05) 100%);
+    border-left: 3px solid rgba(244, 114, 182, 0.5);
+}
+
+.story-author-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+}
+
+.story-ilya .story-author-label {
+    color: #3b82f6;
+}
+
+.story-camila .story-author-label {
+    color: #ec4899;
+}
+
+.story-text {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #374151;
+}
+
+/* Prompt box for story continuation */
+.prompt-box {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed rgba(139, 69, 19, 0.2);
+}
+
+.prompt-text {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #6b4423;
+    background: linear-gradient(135deg, rgba(255, 220, 180, 0.5) 0%, rgba(255, 200, 150, 0.3) 100%);
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(139, 69, 19, 0.2);
+    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+}
+
+/* Story textarea with high contrast */
+.story-textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 1rem 1.25rem;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #1f2937;
+    background: #fffdf8;
+    border: 2px solid rgba(139, 69, 19, 0.25);
+    border-radius: 1rem;
+    resize: none;
+    transition: all 0.2s ease;
+}
+
+.story-textarea::placeholder {
+    color: #9ca3af;
+}
+
+.story-textarea:focus {
+    outline: none;
+    border-color: #f472b6;
+    box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.2);
+}
+
+.story-textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Success message box */
+.success-box {
+    margin-top: 2rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.9) 100%);
+    border-radius: 1rem;
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+}
+
+.success-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #065f46;
+    margin-bottom: 0.5rem;
+}
+
+.success-hint {
+    font-size: 0.875rem;
+    color: #047857;
 }

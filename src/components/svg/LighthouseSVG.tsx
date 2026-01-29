@@ -36,8 +36,8 @@ const LighthouseSVG = memo(function LighthouseSVG({ horizon }: LighthouseSVGProp
         <svg viewBox="0 0 320 240" className="h-full w-full" role="img" aria-label="Lighthouse scene">
             <defs>
                 <linearGradient id="seaFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={isNight ? "#94a3b8" : isSunset ? "#fbbf24" : isDawn ? "#c7d2fe" : "#a7e0ff"} stopOpacity={isNight ? 0.08 : 0.18} />
-                    <stop offset="100%" stopColor={isNight ? "#64748b" : isSunset ? "#fb7185" : isDawn ? "#93c5fd" : "#6ec3ff"} stopOpacity={isNight ? 0.25 : 0.38} />
+                    <stop offset="0%" stopColor={isNight ? "#4a5568" : isSunset ? "#fbbf24" : isDawn ? "#fcd5ce" : "#7dd3fc"} stopOpacity={isNight ? 0.12 : 0.22} />
+                    <stop offset="100%" stopColor={isNight ? "#2d3748" : isSunset ? "#fb7185" : isDawn ? "#f9a8d4" : "#38bdf8"} stopOpacity={isNight ? 0.28 : 0.42} />
                 </linearGradient>
                 <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
                     <feGaussianBlur stdDeviation="2" result="blur" />

@@ -3,6 +3,6 @@
  * Visual effect components
  */
 
-export { default as Snowflakes } from './Snowflakes';
+export { default as Petals } from './Petals';
 export { default as Confetti } from './Confetti';
 export { default as Fireworks } from './Fireworks';

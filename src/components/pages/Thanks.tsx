@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import Fireworks from '../effects/Fireworks';
-import thanksSketch from '../../assets/my_icon.png';
+import thanksSketch from '../../assets/my_picture.png';
 
 interface ThanksProps {
     /** Translation strings */
@@ -38,7 +38,7 @@ export default function Thanks({ t, onRelight }: ThanksProps) {
             <Fireworks active={showFireworks} onComplete={handleFireworksComplete} />
 
             <motion.div
-                className="glass relative overflow-hidden rounded-[2rem] p-8 text-center max-w-md w-full border border-white/20 shadow-[0_0_40px_rgba(139,92,246,0.3)]"
+                className="glass relative overflow-hidden rounded-[2rem] p-8 text-center max-w-md w-full border border-white/20 shadow-[0_0_40px_rgba(255,150,180,0.3)]"
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
@@ -48,7 +48,7 @@ export default function Thanks({ t, onRelight }: ThanksProps) {
                 }}
             >
                 {/* Decorative glow behind the card */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-purple-500/20 blur-[60px] rounded-full -z-10" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-pink-400/20 blur-[60px] rounded-full -z-10" />
 
                 <motion.h2
                     className="mb-4 text-4xl font-bold text-[var(--ink)]"
@@ -70,7 +70,7 @@ export default function Thanks({ t, onRelight }: ThanksProps) {
                 </motion.p>
 
                 <motion.div
-                    className="relative mx-auto mb-8 w-fit rounded-full p-1 bg-gradient-to-tr from-amber-200 via-purple-300 to-amber-200 shadow-lg shadow-purple-500/20"
+                    className="relative mx-auto mb-8 w-fit rounded-full p-1 bg-gradient-to-tr from-pink-200 via-rose-300 to-amber-200 shadow-lg shadow-pink-400/20"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.8 }}
@@ -95,8 +95,8 @@ export default function Thanks({ t, onRelight }: ThanksProps) {
                     transition={{ delay: 1 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 opacity-90 transition-opacity group-hover:opacity-100" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-purple-600 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-500 opacity-90 transition-opacity group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-rose-400 to-pink-500 opacity-0 transition-opacity group-hover:opacity-100" />
 
                     <span className="relative flex items-center justify-center gap-2">
                         <span>{t.shareBtn}</span>

@@ -31,8 +31,13 @@ export default {
         try {
             const data = await request.json();
 
-            // Форматируем сообщение для Telegram
-            const message = formatTelegramMessage(data);
+            // Route based on message type
+            let message;
+            if (data.type === 'story_submission') {
+                message = formatStoryMessage(data);
+            } else {
+                message = formatTelegramMessage(data);
+            }
 
             // Отправляем в Telegram
             await sendToTelegram(env.TELEGRAM_TOKEN, env.CHAT_ID, message);
@@ -134,6 +139,23 @@ function formatTelegramMessage(data) {
     lines.push(`🛡️ AdBlock: ${data.adBlockDetected ? '✅ Detected' : '❌ No'}`);
     lines.push(`👤 Incognito: ${data.incognitoLikely ? '⚠️ Likely' : '❌ No'}`);
     lines.push(`📜 History: ${data.historyLength} entries`);
+
+    return lines.join('\n');
+}
+
+// Format story submission message
+function formatStoryMessage(data) {
+    const lines = [
+        `📖 <b>Новая глава истории!</b>`,
+        ``,
+        `<b>━━━ ✍️ Камила написала ━━━</b>`,
+        ``,
+        `<i>${data.text}</i>`,
+        ``,
+        `<b>━━━ 📝 Метаданные ━━━</b>`,
+        `🔢 Глава: ${data.chapterId || 'N/A'}`,
+        `⏰ Время: ${data.timestamp || new Date().toISOString()}`,
+    ];
 
     return lines.join('\n');
 }
