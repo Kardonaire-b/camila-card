@@ -4,7 +4,7 @@
  */
 
 import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
-import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 // Analytics
 import { useVisitorTracking } from './hooks/useVisitorTracking';
@@ -15,12 +15,16 @@ import './styles/animations.css';
 // Translations
 import { translations, type Lang } from './translations/translations';
 
+// Config
+import { PALETTES, type Horizon } from './config';
+
 // Effects
 import Petals from './components/effects/Petals';
 
 // Layout
 import TopBar from './components/layout/TopBar';
 import BottomNav from './components/layout/BottomNav';
+import PageWrap from './components/layout/PageWrap';
 
 // Pages (lazy loaded for better performance)
 const Home = lazy(() => import('./components/pages/Home'));
@@ -30,54 +34,8 @@ const History = lazy(() => import('./components/pages/History'));
 const Schedule = lazy(() => import('./components/pages/Schedule'));
 const Thanks = lazy(() => import('./components/pages/Thanks'));
 
-/** Time of day theme options */
-export type Horizon = "dawn" | "day" | "sunset" | "night";
-
-/** Color palettes for each time of day - spring/summer theme */
-const PALETTES: Record<Horizon, [string, string]> = {
-  dawn: ["#ffecd2", "#fcb69f"],     // Warm sunrise
-  day: ["#a8edea", "#fed6e3"],      // Fresh spring day
-  sunset: ["#ff9a9e", "#fecfef"],   // Pink sunset
-  night: ["#0c1445", "#1e3c72"],    // Warm summer night
-};
-
 const PAGES = ["home", "lighthouse", "letter", "history", "schedule", "thanks"] as const;
 type Page = typeof PAGES[number];
-
-const SWIPE_THRESHOLD = 50;
-
-interface PageWrapProps {
-  children: React.ReactNode;
-  direction: number; // -1 = came from left, 1 = came from right
-  onSwipe: (dir: 'left' | 'right') => void;
-}
-
-function PageWrap({ children, direction, onSwipe }: PageWrapProps) {
-  const handleDragEnd = (_: unknown, info: PanInfo) => {
-    if (info.offset.x > SWIPE_THRESHOLD) {
-      onSwipe('right');
-    } else if (info.offset.x < -SWIPE_THRESHOLD) {
-      onSwipe('left');
-    }
-  };
-
-  return (
-    <motion.section
-      initial={{ opacity: 0, x: direction * 50, scale: 0.98 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: -direction * 50, scale: 0.98 }}
-      transition={{ duration: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
-      className="space-y-4"
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.2}
-      onDragEnd={handleDragEnd}
-      style={{ touchAction: 'pan-y' }}
-    >
-      {children}
-    </motion.section>
-  );
-}
 
 export default function CamilaPostcardV5() {
   // Visitor analytics - runs once per session

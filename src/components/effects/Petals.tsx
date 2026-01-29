@@ -8,7 +8,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
 import { hasMotionPermissionAPI, requestMotionPermission } from '../../types/device-events';
 import {
-    PETAL_BASE_COUNT,
+    getOptimalPetalCount,
     PETAL_BONUS_COUNT,
     PETAL_PARALLAX_AMOUNT,
     SHAKE_MAGNITUDE_THRESHOLD,
@@ -41,7 +41,7 @@ const generatePetal = (id: string, speedMultiplier = 1, maxDelay = 12): Petal =>
 });
 
 const createInitialPetals = () =>
-    Array.from({ length: PETAL_BASE_COUNT }).map((_, i) =>
+    Array.from({ length: getOptimalPetalCount() }).map((_, i) =>
         generatePetal(`base-${i}`)
     );
 

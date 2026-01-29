@@ -1,0 +1,81 @@
+/*
+ * Effects Styles
+ * Fireworks, confetti, and celebration effects
+ */
+
+/* Fireworks animations */
+.fireworks-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    animation: firework-appear 0.3s ease-out forwards;
+}
+
+@keyframes firework-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color);
+    animation: spark-explode 1.2s ease-out forwards;
+    animation-delay: inherit;
+}
+
+@keyframes spark-explode {
+    0% {
+        transform: rotate(var(--angle)) translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotate(var(--angle)) translateY(120px);
+        opacity: 0;
+    }
+}
+
+/* Confetti animations */
+.confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -20px;
+    border-radius: 2px;
+    animation: confetti-fall ease-out forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotateZ(0deg) rotateX(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotateZ(720deg) rotateX(360deg);
+        opacity: 0;
+    }
+}

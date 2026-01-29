@@ -4,7 +4,7 @@
  */
 
 import { memo, useMemo } from 'react';
-import type { Horizon } from '../../App';
+import type { Horizon } from '../../config';
 
 interface LighthouseSVGProps {
     horizon: Horizon;

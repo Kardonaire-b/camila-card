@@ -1,6 +1,5 @@
 /**
- * Effects barrel export
- * Visual effect components
+ * Effects components barrel export
  */
 
 export { default as Petals } from './Petals';

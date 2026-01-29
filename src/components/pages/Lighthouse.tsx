@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useRef, memo } from 'react';
 import type { Translations } from '../../translations/translations';
-import type { Horizon } from '../../App';
+import type { Horizon } from '../../config';
 import LighthouseSVG from '../svg/LighthouseSVG';
 import Card from '../ui/Card';
 import songUrl from '../../assets/audio/melody.mp3';

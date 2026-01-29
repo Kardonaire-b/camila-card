@@ -1,0 +1,46 @@
+/* 
+ * Petal Animation Styles
+ * GPU-accelerated falling flower petal effects
+ */
+
+/* GPU-accelerated petal fall animation */
+@keyframes petalfall {
+    0% {
+        transform: translateY(-20px) translateZ(0) rotate(var(--rotation, 0deg));
+    }
+
+    25% {
+        transform: translateY(25vh) translateX(15px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 90deg));
+    }
+
+    50% {
+        transform: translateY(50vh) translateX(-10px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 180deg));
+    }
+
+    75% {
+        transform: translateY(75vh) translateX(20px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 270deg));
+    }
+
+    100% {
+        transform: translateY(100vh) translateX(5px) translateZ(0) rotate(calc(var(--rotation, 0deg) + 360deg));
+    }
+}
+
+.petals-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.petal {
+    position: absolute;
+    top: -30px;
+    animation-name: petalfall;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    filter: drop-shadow(0 2px 4px rgba(255, 150, 180, 0.3));
+}

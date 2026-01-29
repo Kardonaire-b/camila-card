@@ -25,6 +25,10 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
     const [isRevealed, setIsRevealed] = useState(false);
     const [isScratching, setIsScratching] = useState(false);
     const lastPosRef = useRef<{ x: number; y: number } | null>(null);
+    const moveCountRef = useRef(0);
+
+    /** Check percentage every N moves for performance */
+    const PERCENTAGE_CHECK_INTERVAL = 5;
 
     // Initialize canvas with scratch layer
     useEffect(() => {
@@ -110,10 +114,13 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
         // Haptic feedback (gentle vibration)
         hapticPatterns.tap();
 
-        // Check if enough is scratched
-        const percentage = calculateScratchPercentage();
-        if (percentage > REVEAL_THRESHOLD) {
-            setIsRevealed(true);
+        // Throttled check - only calculate percentage every N moves for performance
+        moveCountRef.current++;
+        if (moveCountRef.current % PERCENTAGE_CHECK_INTERVAL === 0) {
+            const percentage = calculateScratchPercentage();
+            if (percentage > REVEAL_THRESHOLD) {
+                setIsRevealed(true);
+            }
         }
     }, [calculateScratchPercentage]);
 

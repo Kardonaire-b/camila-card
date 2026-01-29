@@ -1,6 +1,5 @@
 /**
- * UI Components barrel export
- * Reusable UI elements
+ * UI components barrel export
  */
 
 export { default as Card } from './Card';

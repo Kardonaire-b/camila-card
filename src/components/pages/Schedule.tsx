@@ -97,40 +97,26 @@ function getCalendarDays(year: number, month: number, startDate: Date): DayInfo[
     return days;
 }
 
-const WEEKDAYS_RU = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-const WEEKDAYS_ES = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'];
+/** Shift type to Tailwind color class mapping */
+const SHIFT_COLORS: Record<ShiftType, string> = {
+    day: 'bg-amber-400/70',
+    night: 'bg-indigo-500/70',
+    off: 'bg-emerald-400/50',
+};
 
-const MONTHS_RU = [
-    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-];
-const MONTHS_ES = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-];
-
-function getShiftColor(shiftType: ShiftType): string {
-    switch (shiftType) {
-        case 'day': return 'bg-amber-400/70';
-        case 'night': return 'bg-indigo-500/70';
-        case 'off': return 'bg-emerald-400/50';
-    }
-}
-
-function getShiftEmoji(shiftType: ShiftType): string {
-    switch (shiftType) {
-        case 'day': return '☀️';
-        case 'night': return '🌙';
-        case 'off': return '🏠';
-    }
-}
+/** Shift type to emoji mapping */
+const SHIFT_EMOJIS: Record<ShiftType, string> = {
+    day: '☀️',
+    night: '🌙',
+    off: '🏠',
+};
 
 export default function Schedule({ t }: ScheduleProps) {
     const [viewDate] = useState(() => new Date());
-    const lang = t.navHome === 'Главная' ? 'ru' : 'es';
 
-    const weekdays = lang === 'ru' ? WEEKDAYS_RU : WEEKDAYS_ES;
-    const months = lang === 'ru' ? MONTHS_RU : MONTHS_ES;
+    // Use centralized translations for weekdays and months
+    const weekdays = t.weekdays;
+    const months = t.months;
 
     const calendarDays = useMemo(() =>
         getCalendarDays(viewDate.getFullYear(), viewDate.getMonth(), SCHEDULE_START_DATE),
@@ -142,20 +128,12 @@ export default function Schedule({ t }: ScheduleProps) {
     const currentShift = getShiftType(today, SCHEDULE_START_DATE);
 
     const statusMessage = useMemo(() => {
-        if (lang === 'ru') {
-            switch (currentShift) {
-                case 'day': return '☀️ Твой хранитель сейчас на дневной смене';
-                case 'night': return '🌙 Твой хранитель сейчас на ночной смене';
-                case 'off': return '🏠 Твой хранитель сейчас дома';
-            }
-        } else {
-            switch (currentShift) {
-                case 'day': return '☀️ Tu guardián está en turno de día';
-                case 'night': return '🌙 Tu guardián está en turno de noche';
-                case 'off': return '🏠 Tu guardián está en casa';
-            }
+        switch (currentShift) {
+            case 'day': return t.scheduleStatusDay;
+            case 'night': return t.scheduleStatusNight;
+            case 'off': return t.scheduleStatusOff;
         }
-    }, [currentShift, lang]);
+    }, [currentShift, t]);
 
     return (
         <div className="space-y-4">
@@ -193,7 +171,7 @@ export default function Schedule({ t }: ScheduleProps) {
                                 relative aspect-square flex flex-col items-center justify-center rounded-lg text-sm
                                 ${dayInfo.isCurrentMonth ? 'text-[var(--ink)]' : 'text-[var(--ink)]/30'}
                                 ${dayInfo.isToday ? 'ring-2 ring-[var(--ink)] ring-offset-1' : ''}
-                                ${getShiftColor(dayInfo.shiftType)}
+                                ${SHIFT_COLORS[dayInfo.shiftType]}
                             `}
                         >
                             <span className={`font-medium ${dayInfo.isToday ? 'font-bold' : ''}`}>
@@ -201,7 +179,7 @@ export default function Schedule({ t }: ScheduleProps) {
                             </span>
                             {dayInfo.isCurrentMonth && (
                                 <span className="text-[10px] leading-none mt-0.5">
-                                    {getShiftEmoji(dayInfo.shiftType)}
+                                    {SHIFT_EMOJIS[dayInfo.shiftType]}
                                 </span>
                             )}
                         </motion.div>
@@ -212,15 +190,15 @@ export default function Schedule({ t }: ScheduleProps) {
                 <div className="flex justify-center gap-4 mt-4 text-xs text-[var(--ink)]/80">
                     <div className="flex items-center gap-1">
                         <div className="w-3 h-3 rounded bg-amber-400/70"></div>
-                        <span>{lang === 'ru' ? 'День' : 'Día'}</span>
+                        <span>{t.scheduleLegendDay}</span>
                     </div>
                     <div className="flex items-center gap-1">
                         <div className="w-3 h-3 rounded bg-indigo-500/70"></div>
-                        <span>{lang === 'ru' ? 'Ночь' : 'Noche'}</span>
+                        <span>{t.scheduleLegendNight}</span>
                     </div>
                     <div className="flex items-center gap-1">
                         <div className="w-3 h-3 rounded bg-emerald-400/50"></div>
-                        <span>{lang === 'ru' ? 'Дома' : 'Casa'}</span>
+                        <span>{t.scheduleLegendOff}</span>
                     </div>
                 </div>
             </Card>

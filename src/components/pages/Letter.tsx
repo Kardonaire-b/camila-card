@@ -9,116 +9,28 @@ import type { Translations } from '../../translations/translations';
 import Confetti from '../effects/Confetti';
 import handImage from '../../assets/my_hand.png';
 import { LETTER_UNLOCK_DATE } from '../../config';
-import { calculateCountdown, type TimeUnits } from '../../utils/time';
+import { useCountdown, useInterval } from '../../hooks';
+import {
+    parseTextToSegments,
+    renderSegmentsWithLength,
+    getVisibleTextLength
+} from '../../utils/textParser';
 
 interface LetterProps {
     /** Translation strings */
     t: Translations;
 }
 
+/** Typewriter animation speed in milliseconds per character */
+const TYPEWRITER_SPEED_MS = 65;
+
+/** Delay before starting next paragraph in milliseconds */
+const PARAGRAPH_TRANSITION_DELAY_MS = 250;
+
+/** Duration to show confetti effect in milliseconds */
+const CONFETTI_DURATION_MS = 4000;
 
 type Phase = "done" | "active" | "pending";
-
-/** Text segment type: plain text or formatted */
-type TextSegment =
-    | { type: 'plain'; text: string }
-    | { type: 'bold'; text: string }
-    | { type: 'italic'; text: string }
-    | { type: 'highlight'; text: string };
-
-/** Parses text into segments without rendering */
-function parseTextToSegments(text: string): TextSegment[] {
-    const segments: TextSegment[] = [];
-    let remaining = text;
-
-    const patterns: { regex: RegExp; type: 'bold' | 'italic' | 'highlight' }[] = [
-        { regex: /\*\*(.+?)\*\*/, type: 'bold' },
-        { regex: /\*(.+?)\*/, type: 'italic' },
-        { regex: /\{\{(.+?)\}\}/, type: 'highlight' }
-    ];
-
-    while (remaining.length > 0) {
-        let earliestMatch: { index: number; fullLength: number; content: string; type: 'bold' | 'italic' | 'highlight' } | null = null;
-
-        for (const { regex, type } of patterns) {
-            const match = remaining.match(regex);
-            if (match && match.index !== undefined) {
-                if (!earliestMatch || match.index < earliestMatch.index) {
-                    earliestMatch = {
-                        index: match.index,
-                        fullLength: match[0].length,
-                        content: match[1],
-                        type
-                    };
-                }
-            }
-        }
-
-        if (earliestMatch) {
-            if (earliestMatch.index > 0) {
-                segments.push({ type: 'plain', text: remaining.slice(0, earliestMatch.index) });
-            }
-            segments.push({ type: earliestMatch.type, text: earliestMatch.content });
-            remaining = remaining.slice(earliestMatch.index + earliestMatch.fullLength);
-        } else {
-            segments.push({ type: 'plain', text: remaining });
-            break;
-        }
-    }
-
-    return segments;
-}
-
-/** Renders segments with respect to visible character count */
-function renderSegmentsWithLength(segments: TextSegment[], visibleLength: number): React.ReactNode[] {
-    const result: React.ReactNode[] = [];
-    let consumed = 0;
-
-    for (let i = 0; i < segments.length && consumed < visibleLength; i++) {
-        const seg = segments[i];
-        const segLen = seg.text.length;
-        const remaining = visibleLength - consumed;
-        const showLen = Math.min(segLen, remaining);
-        const displayText = seg.text.slice(0, showLen);
-
-        if (displayText.length === 0) continue;
-
-        switch (seg.type) {
-            case 'plain':
-                result.push(displayText);
-                break;
-            case 'bold':
-                result.push(<strong key={i} className="font-bold">{displayText}</strong>);
-                break;
-            case 'italic':
-                result.push(<em key={i} className="italic">{displayText}</em>);
-                break;
-            case 'highlight':
-                result.push(
-                    <span
-                        key={i}
-                        className="font-semibold"
-                        style={{
-                            color: '#d4a574',
-                            textShadow: '0 0 8px rgba(212, 165, 116, 0.4)'
-                        }}
-                    >
-                        {displayText}
-                    </span>
-                );
-                break;
-        }
-
-        consumed += showLen;
-    }
-
-    return result;
-}
-
-/** Gets total visible text length (without markup) */
-function getVisibleTextLength(segments: TextSegment[]): number {
-    return segments.reduce((acc, seg) => acc + seg.text.length, 0);
-}
 
 /** Blinking cursor component */
 const BlinkingCursor = () => (
@@ -137,7 +49,7 @@ interface TypewriterParagraphProps {
 }
 
 const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraphProps>(
-    ({ text, phase, speed = 65, onDone, isLast }, ref) => {
+    ({ text, phase, speed = TYPEWRITER_SPEED_MS, onDone, isLast }, ref) => {
         // Parse text into segments once
         const segments = useMemo(() => parseTextToSegments(text), [text]);
         const totalVisibleLength = useMemo(() => getVisibleTextLength(segments), [segments]);
@@ -147,24 +59,31 @@ const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraph
         const onDoneRef = useRef(onDone);
         onDoneRef.current = onDone;
 
+        // Use interval for typewriter effect
+        useInterval(
+            () => {
+                setLen(prev => {
+                    const next = prev + 1;
+                    if (next >= totalVisibleLength) {
+                        onDoneRef.current?.();
+                        return totalVisibleLength;
+                    }
+                    return next;
+                });
+            },
+            phase === "active" && len < totalVisibleLength ? speed : null
+        );
+
+        // Reset on phase change
         useEffect(() => {
             if (phase === "active") {
                 setLen(0);
-                let i = 0;
-                const id = setInterval(() => {
-                    i++;
-                    if (i >= totalVisibleLength) {
-                        setLen(totalVisibleLength);
-                        clearInterval(id);
-                        onDoneRef.current?.();
-                    } else {
-                        setLen(i);
-                    }
-                }, speed);
-                return () => clearInterval(id);
+            } else if (phase === "done") {
+                setLen(totalVisibleLength);
+            } else {
+                setLen(0);
             }
-            setLen(phase === "done" ? totalVisibleLength : 0);
-        }, [phase, totalVisibleLength, speed]);
+        }, [phase, totalVisibleLength]);
 
         const isTyping = phase === "active" && len < totalVisibleLength;
         const isDone = phase === "done";
@@ -185,33 +104,20 @@ const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraph
 );
 
 export default function Letter({ t }: LetterProps) {
-
-    const [timeLeft, setTimeLeft] = useState<TimeUnits | null>(null);
+    const { timeLeft, isComplete } = useCountdown(LETTER_UNLOCK_DATE);
     const [isUnlocked, setIsUnlocked] = useState(() => new Date() >= LETTER_UNLOCK_DATE);
     const [showConfetti, setShowConfetti] = useState(false);
     const wasLockedRef = useRef(true);
 
+    // Handle unlock transition
     useEffect(() => {
-        const checkTime = () => {
-            const countdown = calculateCountdown(LETTER_UNLOCK_DATE);
-
-            if (countdown === null) {
-                if (wasLockedRef.current) {
-                    wasLockedRef.current = false;
-                    setShowConfetti(true);
-                    setTimeout(() => setShowConfetti(false), 4000);
-                }
-                setIsUnlocked(true);
-                setTimeLeft(null);
-            } else {
-                setTimeLeft(countdown);
-            }
-        };
-
-        checkTime();
-        const interval = setInterval(checkTime, 1000);
-        return () => clearInterval(interval);
-    }, []);
+        if (isComplete && wasLockedRef.current) {
+            wasLockedRef.current = false;
+            setShowConfetti(true);
+            setIsUnlocked(true);
+            setTimeout(() => setShowConfetti(false), CONFETTI_DURATION_MS);
+        }
+    }, [isComplete]);
 
     const blocks: string[] = useMemo(() => t.letterBlocks ?? [], [t.letterBlocks]);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -326,7 +232,7 @@ export default function Letter({ t }: LetterProps) {
                                     text={text}
                                     phase={phase}
                                     isLast={isLast}
-                                    onDone={() => setTimeout(() => setIdx(prev => Math.max(prev, i + 1)), 250)}
+                                    onDone={() => setTimeout(() => setIdx(prev => Math.max(prev, i + 1)), PARAGRAPH_TRANSITION_DELAY_MS)}
                                 />
                             );
                         })}

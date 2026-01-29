@@ -1,0 +1,114 @@
+/*
+ * Letter Page Styles
+ * Typewriter effect, letter paper styling, and scrollbar
+ */
+
+/* Custom scrollbar styles */
+.letter-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 165, 116, 0.4) transparent;
+}
+
+.letter-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.letter-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.letter-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(212, 165, 116, 0.5), rgba(255, 215, 0, 0.3));
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.letter-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(212, 165, 116, 0.7), rgba(255, 215, 0, 0.5));
+}
+
+/* Letter paper texture effect - subtle gradient only */
+.letter-paper {
+    position: relative;
+    background:
+        linear-gradient(135deg, rgba(255, 253, 245, 0.02) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(212, 165, 116, 0.02) 0%, transparent 50%);
+}
+
+/* Corner decorations - subtle */
+.letter-decorations {
+    position: relative;
+}
+
+.letter-decorations::before {
+    content: '✨';
+    position: absolute;
+    font-size: 0.8rem;
+    opacity: 0.4;
+    pointer-events: none;
+    top: 0.75rem;
+    right: 0.75rem;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+/* Fade-in glow for completed paragraphs */
+.paragraph-done {
+    animation: paragraph-glow 0.5s ease-out forwards;
+}
+
+@keyframes paragraph-glow {
+    0% {
+        text-shadow: none;
+    }
+
+    50% {
+        text-shadow: 0 0 15px rgba(212, 165, 116, 0.3);
+    }
+
+    100% {
+        text-shadow: 0 0 5px rgba(212, 165, 116, 0.1);
+    }
+}
+
+/* Signature styling */
+.letter-signature {
+    font-style: italic;
+    color: #d4a574;
+    text-align: right;
+    margin-top: 1rem;
+    font-size: 1.1em;
+}
+
+/* Letter completion decoration */
+.letter-complete-decoration {
+    text-align: center;
+    margin-top: 1.5rem;
+    animation: hearts-appear 1s ease-out forwards;
+}
+
+@keyframes hearts-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Subtle vignette effect */
+.letter-vignette::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 70%, rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
+    border-radius: inherit;
+}

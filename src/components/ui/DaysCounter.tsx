@@ -3,19 +3,14 @@
  * Real-time countdown showing days, hours, minutes, seconds since relationship start
  */
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RELATIONSHIP_START_DATE } from '../../config';
 import type { Translations } from '../../translations/translations';
-import { calculateTimeDiff, type TimeUnits } from '../../utils/time';
+import { useTimeSince } from '../../hooks';
 
 interface DaysCounterProps {
     /** Translation strings */
     t: Translations;
-}
-
-function calculateTime(): TimeUnits {
-    return calculateTimeDiff(RELATIONSHIP_START_DATE);
 }
 
 function AnimatedNumber({ value, label }: { value: number; label: string }) {
@@ -37,14 +32,7 @@ function AnimatedNumber({ value, label }: { value: number; label: string }) {
 }
 
 export default function DaysCounter({ t }: DaysCounterProps) {
-    const [time, setTime] = useState<TimeUnits>(calculateTime);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(calculateTime());
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
+    const time = useTimeSince(RELATIONSHIP_START_DATE);
 
     return (
         <div className="text-center space-y-4">

@@ -87,6 +87,17 @@ export const translations = {
             "Te amo hasta las estrellas y de vuelta 🚀",
             "Eres mi universo entero 🌌",
         ],
+        weekdays: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'],
+        months: [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ],
+        scheduleLegendDay: 'Día',
+        scheduleLegendNight: 'Noche',
+        scheduleLegendOff: 'Casa',
+        scheduleStatusDay: '☀️ Tu guardián está en turno de día',
+        scheduleStatusNight: '🌙 Tu guardián está en turno de noche',
+        scheduleStatusOff: '🏠 Tu guardián está en casa',
     },
     ru: {
         topbarTitle: "🌸 Для Моего Солнца 🌸",
@@ -174,6 +185,17 @@ export const translations = {
             "Люблю тебя до звёзд и обратно 🚀",
             "Ты — вся моя вселенная 🌌",
         ],
+        weekdays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+        months: [
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ],
+        scheduleLegendDay: 'День',
+        scheduleLegendNight: 'Ночь',
+        scheduleLegendOff: 'Дома',
+        scheduleStatusDay: '☀️ Твой хранитель сейчас на дневной смене',
+        scheduleStatusNight: '🌙 Твой хранитель сейчас на ночной смене',
+        scheduleStatusOff: '🏠 Твой хранитель сейчас дома',
     },
 };
 
