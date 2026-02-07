@@ -68,5 +68,3 @@ export function useDeviceOrientation(): DeviceOrientation {
 
     return { ...tilt, isSupported };
 }
-
-export default useDeviceOrientation;

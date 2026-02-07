@@ -3,8 +3,6 @@
  * Parses markdown-like text into styled segments for typewriter effect
  */
 
-import React from 'react';
-
 /** Text segment type: plain text or formatted */
 export type TextSegment =
     | { type: 'plain'; text: string }
