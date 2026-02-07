@@ -47,8 +47,8 @@ const NavButton = memo(function NavButton({
         <button
             onClick={onClick}
             className={`flex flex-col items-center rounded-xl px-2 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-black/10 ${isActive
-                    ? "bg-white/85 text-[var(--ink)] shadow"
-                    : "text-[var(--ink)]/80 hover:bg-white/50"
+                ? "bg-white/85 text-[var(--ink)] shadow"
+                : "text-[var(--ink)]/80 hover:bg-white/50"
                 }`}
             aria-current={isActive ? "page" : undefined}
             aria-label={item.label}
@@ -73,7 +73,7 @@ export default function BottomNav({ t, page, onNavigate }: BottomNavProps) {
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-10">
             <div className="mx-auto max-w-md px-4" style={{ paddingBottom: "calc(16px + env(safe-area-inset-bottom,0))" }}>
-                <div className="glass soft-card grid grid-cols-6 gap-1 rounded-2xl p-2">
+                <div className="bottom-nav-glass soft-card grid grid-cols-6 gap-1 rounded-2xl p-2">
                     {items.map(it => (
                         <NavButton
                             key={it.key}

@@ -83,6 +83,13 @@
     -webkit-backdrop-filter: blur(12px);
 }
 
+/* Bottom navigation glass - stronger blur and higher opacity for readability */
+.bottom-nav-glass {
+    background: var(--nav-glass, rgba(255, 255, 255, 0.75));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
 .soft-card {
     box-shadow: 0 10px 30px rgba(8, 12, 30, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     border: 1px solid rgba(255, 255, 255, 0.35);

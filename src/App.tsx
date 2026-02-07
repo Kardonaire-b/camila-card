@@ -59,6 +59,7 @@ export default function CamilaPostcardV5() {
   useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty("--glass", horizon === "night" ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.75)");
+    root.style.setProperty("--nav-glass", horizon === "night" ? "rgba(30,40,80,0.85)" : "rgba(255,255,255,0.85)");
     root.style.setProperty("--ink", horizon === "night" ? "#f0f0f0" : "#0b1020");
   }, [horizon]);
 
@@ -152,9 +153,9 @@ export default function CamilaPostcardV5() {
             </AnimatePresence>
           </Suspense>
         </main>
-
-        <BottomNav t={t} page={page} onNavigate={(p) => navigateTo(p as Page)} />
       </div>
+
+      <BottomNav t={t} page={page} onNavigate={(p) => navigateTo(p as Page)} />
     </>
   );
 }
