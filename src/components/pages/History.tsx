@@ -4,7 +4,7 @@
  * Supports form submission to Telegram via Cloudflare Worker
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations, Lang } from '../../translations/translations';
 import { STORY_CHAPTERS } from '../../translations/story';
@@ -23,7 +23,6 @@ export default function History({ t, lang }: HistoryProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState(false);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     // Load draft from localStorage
     useEffect(() => {
@@ -119,7 +118,6 @@ export default function History({ t, lang }: HistoryProps) {
                             </div>
 
                             <textarea
-                                ref={textareaRef}
                                 value={inputText}
                                 onChange={(e) => setInputText(e.target.value)}
                                 placeholder={t.historyPlaceholder}

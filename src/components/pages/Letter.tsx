@@ -98,6 +98,8 @@ const TypewriterParagraph = forwardRef<HTMLParagraphElement, TypewriterParagraph
     }
 );
 
+TypewriterParagraph.displayName = 'TypewriterParagraph';
+
 export default function Letter({ t }: LetterProps) {
     const blocks: string[] = useMemo(() => t.letterBlocks ?? [], [t.letterBlocks]);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
