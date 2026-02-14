@@ -19,6 +19,13 @@ interface ScratchCardProps {
 /** Percentage of scratched area required to auto-reveal */
 const REVEAL_THRESHOLD = 0.65;
 
+/** Check percentage every N moves for performance */
+const PERCENTAGE_CHECK_INTERVAL = 5;
+
+/** Canvas scratch brush settings */
+const SCRATCH_LINE_WIDTH = 40;
+const SCRATCH_ARC_RADIUS = 20;
+
 export default function ScratchCard({ t, children }: ScratchCardProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -26,9 +33,6 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
     const [isScratching, setIsScratching] = useState(false);
     const lastPosRef = useRef<{ x: number; y: number } | null>(null);
     const moveCountRef = useRef(0);
-
-    /** Check percentage every N moves for performance */
-    const PERCENTAGE_CHECK_INTERVAL = 5;
 
     // Initialize canvas with scratch layer
     useEffect(() => {
@@ -100,13 +104,13 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
         if (lastPosRef.current) {
             ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
             ctx.lineTo(canvasX, canvasY);
-            ctx.lineWidth = 40;
+            ctx.lineWidth = SCRATCH_LINE_WIDTH;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.stroke();
         }
 
-        ctx.arc(canvasX, canvasY, 20, 0, Math.PI * 2);
+        ctx.arc(canvasX, canvasY, SCRATCH_ARC_RADIUS, 0, Math.PI * 2);
         ctx.fill();
 
         lastPosRef.current = { x: canvasX, y: canvasY };

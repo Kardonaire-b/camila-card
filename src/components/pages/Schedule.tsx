@@ -3,7 +3,7 @@
  * Interactive calendar showing work shift schedule with 2/2 rotation
  */
 
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import Card from '../ui/Card';
@@ -112,7 +112,7 @@ const SHIFT_EMOJIS: Record<ShiftType, string> = {
 };
 
 export default function Schedule({ t }: ScheduleProps) {
-    const viewDate = useMemo(() => new Date(), []);
+    const [viewDate] = useState(() => new Date());
 
     // Use centralized translations for weekdays and months
     const weekdays = t.weekdays;
@@ -162,11 +162,8 @@ export default function Schedule({ t }: ScheduleProps) {
                 {/* Calendar grid */}
                 <div className="grid grid-cols-7 gap-1">
                     {calendarDays.map((dayInfo, idx) => (
-                        <motion.div
+                        <div
                             key={idx}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: idx * 0.01 }}
                             className={`
                                 relative aspect-square flex flex-col items-center justify-center rounded-lg text-sm
                                 ${dayInfo.isCurrentMonth ? 'text-[var(--ink)]' : 'text-[var(--ink)]/30'}
@@ -182,7 +179,7 @@ export default function Schedule({ t }: ScheduleProps) {
                                     {SHIFT_EMOJIS[dayInfo.shiftType]}
                                 </span>
                             )}
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
 

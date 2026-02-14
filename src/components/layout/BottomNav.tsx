@@ -3,22 +3,23 @@
  * Fixed bottom navigation bar with page icons and labels
  */
 
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useCallback } from 'react';
 import { Home as HomeIcon, Signal, Mail, BookOpen, Calendar, Gift } from 'lucide-react';
 import type { Translations } from '../../translations/translations';
+import type { Page } from '../../App';
 
 interface BottomNavProps {
     /** Translation strings */
     t: Translations;
     /** Current active page key */
-    page: string;
+    page: Page;
     /** Navigation callback */
-    onNavigate: (key: string) => void;
+    onNavigate: (key: Page) => void;
 }
 
 /** Navigation item configuration */
 interface NavItem {
-    key: string;
+    key: Page;
     label: string;
     icon: React.ReactNode;
 }
@@ -37,15 +38,17 @@ const NavIcons = {
 const NavButton = memo(function NavButton({
     item,
     isActive,
-    onClick
+    onNavigate,
 }: {
     item: NavItem;
     isActive: boolean;
-    onClick: () => void;
+    onNavigate: (key: Page) => void;
 }) {
+    const handleClick = useCallback(() => onNavigate(item.key), [onNavigate, item.key]);
+
     return (
         <button
-            onClick={onClick}
+            onClick={handleClick}
             className={`flex flex-col items-center rounded-xl px-2 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-black/10 ${isActive
                 ? "bg-white/85 text-[var(--ink)] shadow"
                 : "text-[var(--ink)]/80 hover:bg-white/50"
@@ -79,7 +82,7 @@ export default function BottomNav({ t, page, onNavigate }: BottomNavProps) {
                             key={it.key}
                             item={it}
                             isActive={page === it.key}
-                            onClick={() => onNavigate(it.key)}
+                            onNavigate={onNavigate}
                         />
                     ))}
                 </div>

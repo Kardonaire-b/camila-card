@@ -34,8 +34,8 @@ const History = lazy(() => import('./components/pages/History'));
 const Schedule = lazy(() => import('./components/pages/Schedule'));
 const Thanks = lazy(() => import('./components/pages/Thanks'));
 
-const PAGES = ["home", "lighthouse", "letter", "history", "schedule", "thanks"] as const;
-type Page = typeof PAGES[number];
+export const PAGES = ["home", "lighthouse", "letter", "history", "schedule", "thanks"] as const;
+export type Page = typeof PAGES[number];
 
 export default function CamilaPostcardV5() {
   // Visitor analytics - runs once per session

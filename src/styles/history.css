@@ -2,17 +2,18 @@
  * History Page Styles
  * Collaborative story styling
  * Works in both light and dark (night) modes
+ * Uses double-class selectors for specificity instead of !important
  */
 
-.history-book {
+.history-book.history-book {
     /* Override glass background with solid paper-like appearance */
-    background: linear-gradient(135deg, rgba(255, 253, 245, 0.98) 0%, rgba(255, 248, 240, 0.98) 100%) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: linear-gradient(135deg, rgba(255, 253, 245, 0.98) 0%, rgba(255, 248, 240, 0.98) 100%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     box-shadow:
         0 10px 40px rgba(139, 69, 19, 0.15),
         inset 0 0 60px rgba(210, 180, 140, 0.1);
-    border: 1px solid rgba(210, 180, 140, 0.3) !important;
+    border: 1px solid rgba(210, 180, 140, 0.3);
 }
 
 .story-chapter {
@@ -105,13 +106,13 @@
 }
 
 /* Submit button - ensure text is always readable */
-.history-book button {
-    color: white !important;
+.history-book.history-book button {
+    color: white;
 }
 
 /* Character count - ensure visibility on light background */
-.history-book .text-xs {
-    color: #92400e !important;
+.history-book.history-book .text-xs {
+    color: #92400e;
 }
 
 /* Success message box */
@@ -138,6 +139,6 @@
 }
 
 /* Error text */
-.history-book .text-red-500 {
-    color: #dc2626 !important;
+.history-book.history-book .text-red-500 {
+    color: #dc2626;
 }

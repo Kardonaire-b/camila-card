@@ -110,8 +110,6 @@ export default function Letter({ t }: LetterProps) {
 
     // Load saved progress on mount
     const [idx, setIdx] = useState(() => {
-        if (typeof window === 'undefined') return 0;
-
         // Check for reduced motion preference
         if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
             return blocks.length;
@@ -138,7 +136,7 @@ export default function Letter({ t }: LetterProps) {
         if (activeParaRef.current && scrollContainerRef.current) {
             activeParaRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
-    });
+    }, [idx]);
 
     // Check if letter is complete
     const isLetterComplete = idx >= blocks.length;

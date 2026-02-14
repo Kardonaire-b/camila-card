@@ -23,8 +23,10 @@ const LighthouseSVG = memo(function LighthouseSVG({ horizon }: LighthouseSVGProp
     const BEAM_OPA = isNight ? 0.62 : 0.36;
     const BEAM_COL = isNight ? "#fff3cf" : "#fff8e1";
 
+    const STAR_COUNT = 22;
+
     const stars = useMemo(
-        () => Array.from({ length: 22 }).map(() => ({
+        () => Array.from({ length: STAR_COUNT }).map(() => ({
             cx: 20 + Math.random() * 280,
             cy: 20 + Math.random() * 80,
             r: Math.random() * 1.2 + 0.4,

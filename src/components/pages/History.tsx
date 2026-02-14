@@ -90,7 +90,7 @@ export default function History({ t, lang }: HistoryProps) {
                             key={chapter.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.2 }}
+                            transition={{ delay: Math.min(index * 0.2, 0.6) }}
                             className={`story-chapter ${chapter.author === 'ilya' ? 'story-ilya' : 'story-camila'}`}
                         >
                             <div className="story-author-label">

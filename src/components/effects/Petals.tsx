@@ -4,7 +4,7 @@
  * Supports shake-to-add-more-petals on mobile devices
  */
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, memo, type CSSProperties } from 'react';
 import { useDeviceOrientation } from '../../hooks/useDeviceOrientation';
 import { hasMotionPermissionAPI, requestMotionPermission } from '../../types/device-events';
 import {
@@ -29,6 +29,12 @@ interface Petal {
 
 const PETAL_TYPES: Petal['type'][] = ['sakura', 'sakura', 'sakura', 'white', 'orange'];
 
+const PETAL_COLORS: Record<Petal['type'], string> = {
+    sakura: '#ffb7c5',
+    white: '#fff5f5',
+    orange: '#ffd4a3',
+};
+
 const generatePetal = (id: string, speedMultiplier = 1, maxDelay = 12): Petal => ({
     id,
     left: Math.random() * 100,
@@ -45,7 +51,7 @@ const createInitialPetals = () =>
         generatePetal(`base-${i}`)
     );
 
-const Petals = React.memo(function Petals() {
+const Petals = memo(function Petals() {
     const { tiltX, tiltY } = useDeviceOrientation();
 
     const basePetals = useMemo(() => createInitialPetals(), []);
@@ -103,19 +109,10 @@ const Petals = React.memo(function Petals() {
         };
     }, []);
 
-    const allPetals = [...basePetals, ...bonusPetals];
+    const allPetals = useMemo(() => [...basePetals, ...bonusPetals], [basePetals, bonusPetals]);
 
     const parallaxX = tiltX * PETAL_PARALLAX_AMOUNT;
     const parallaxY = tiltY * PETAL_PARALLAX_AMOUNT * 0.5;
-
-    const getPetalColor = (type: Petal['type']) => {
-        switch (type) {
-            case 'sakura': return '#ffb7c5';
-            case 'white': return '#fff5f5';
-            case 'orange': return '#ffd4a3';
-            default: return '#ffb7c5';
-        }
-    };
 
     return (
         <div
@@ -135,9 +132,9 @@ const Petals = React.memo(function Petals() {
                         opacity: petal.opacity,
                         animationDuration: `${petal.duration}s`,
                         animationDelay: `${petal.delay}s`,
-                        color: getPetalColor(petal.type),
+                        color: PETAL_COLORS[petal.type],
                         '--rotation': `${petal.rotation}deg`,
-                    } as React.CSSProperties}
+                    } as CSSProperties}
                 >
                     🌸
                 </div>
