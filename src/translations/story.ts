@@ -90,4 +90,44 @@ Las paredes de piedra, que guardaban el eco de mil vientos helados, empezaron a 
             es: 'Ella abrió sus manos. En sus palmas había algo que había traído desde muy lejos, a través de la niebla. ¿Qué era?'
         }
     },
+    {
+        id: 6,
+        author: 'camila',
+        text: {
+            ru: `Она раскрыла ладони. В них покоился необработанный опал — кусок живого камня, словно укравший все краски, которые туман столетиями отнимал у Маяка. При соприкосновении с янтарным светом самоцвет вспыхнул изнутри, являя отблески закатов, которые он считал забытыми. Этот предмет был зеркалом его собственной души: структура, которая, выдержав удары времени, превратила свои трещины в убежище цвета.
+
+Под влиянием этого камня Маяк содрогнулся. Его стены завибрировали, отпуская тяжесть древних карт и начертанных имён, которые забвение не смогло стереть. Тогда он понял, что никогда не ждал корабля — он ждал того, кто сможет прочесть его историю без слов. Его каменное сердце издало мягкий хруст; оно не ломалось — оно пробуждалось. Словно воздух вновь нашёл свой путь, Маяк наконец решился выдохнуть.`,
+            es: `Ella abrió sus manos. En sus palmas descansaba un ópalo en bruto, una pieza de roca viva que parecía haber robado los colores que la niebla le negó al Faro durante siglos. Al contacto con la luz ámbar, la gema se encendió desde adentro, revelando destellos de atardeceres que él creía olvidados. Aquel objeto era el espejo de su propia alma: una estructura que, tras ser golpeada por el tiempo, transformó sus fracturas en un refugio de color.
+
+Bajo el influjo de esa piedra, el Faro se estremeció. Sus paredes vibraron, dejando escapar el peso de mapas antiguos y nombres grabados que el olvido no logró borrar. Comprendió entonces que nunca esperó a un barco, sino a alguien capaz de leer su historia sin palabras. Su corazón de piedra dio un crujido dulce; no se estaba rompiendo, estaba despertándose. Como si el aire volviera a encontrar su camino, se atrevió, finalmente, a exhalar.`
+        }
+    },
+    {
+        id: 7,
+        author: 'ilya',
+        text: {
+            ru: `Этот выдох обернулся ударной волной. Стекло фонаря задрожало, и на мгновение янтарный свет погас, оставив Маяк в кромешной тьме.
+
+Но это была не холодная тьма. Это была тёплая, бархатная тьма утробы — тишина перед первым ударом сердца.
+
+В этой тишине опал в её руках начал сиять. Не отражённым светом, а собственным. Мягкое, переливчатое сияние заполнило башню танцующими тенями цветов, которым нет названия.
+
+Маяк, всегда смотревший наружу, на пустой горизонт, впервые заглянул внутрь себя. И увидел, что он больше не пуст.
+
+Старый механизм остановился. Ему больше не нужно было вращаться. Время Поиска закончилось. Теперь начиналось время Творения.`,
+            es: `Ese exhalar se convirtió en una onda expansiva. El vidrio de la linterna tembló, y por un instante, la luz ámbar se apagó, dejando al Faro en la oscuridad total.
+
+Pero no era una oscuridad fría. Era la oscuridad cálida y aterciopelada de un útero, el silencio antes del primer latido.
+
+En ese silencio, el ópalo en sus manos comenzó a brillar. No con luz reflejada, sino con luz propia. Un resplandor suave, iridiscente, que llenó la torre de sombras danzantes de colores que no tienen nombre.
+
+El Faro, que siempre había mirado hacia afuera, hacia el horizonte vacío, por primera vez miró hacia adentro. Y vio que ya no estaba vacío.
+
+El viejo mecanismo se detuvo. Ya no necesitaba girar. El tiempo de la búsqueda había terminado. Ahora comenzaba el tiempo de la Creación.`
+        },
+        prompt: {
+            ru: 'Маяк стал Башней из Слоновой Кости — замкнутым, совершенным миром. Но опал продолжает сиять, пульсировать, просить чего-то большего. Что они сделают первым в этом новом мире, освещённом изнутри?',
+            es: 'El Faro se ha convertido en una Torre de Marfil, un mundo cerrado y perfecto. Pero el ópalo sigue brillando, pulsando, pidiendo algo más. ¿Qué es lo primero que harán juntos en este nuevo mundo iluminado por dentro?'
+        }
+    },
 ];
