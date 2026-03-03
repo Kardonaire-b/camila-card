@@ -3,7 +3,6 @@
  * Real-time countdown showing days, hours, minutes, seconds since relationship start
  */
 
-import { motion } from 'framer-motion';
 import { RELATIONSHIP_START_DATE } from '../../config';
 import type { Translations } from '../../translations/translations';
 import { useTimeSince } from '../../hooks';
@@ -16,14 +15,9 @@ interface DaysCounterProps {
 function AnimatedNumber({ value, label }: { value: number; label: string }) {
     return (
         <div className="flex flex-col items-center">
-            <motion.span
-                key={value}
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                className="text-2xl font-bold text-[var(--ink)]"
-            >
+            <span className="text-2xl font-bold text-[var(--ink)] tabular-nums">
                 {value}
-            </motion.span>
+            </span>
             <span className="text-xs text-[var(--ink)]/70 uppercase tracking-wide">
                 {label}
             </span>
@@ -47,14 +41,11 @@ export default function DaysCounter({ t }: DaysCounterProps) {
                 <AnimatedNumber value={time.seconds} label={t.secondsLabel} />
             </div>
 
-            <motion.p
-                className="text-sm text-[var(--ink)]/70 italic"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+            <p
+                className="text-sm text-[var(--ink)]/70 italic animate-[fadeIn_0.5s_ease-in_0.5s_both]"
             >
                 {t.togetherMessage}
-            </motion.p>
+            </p>
         </div>
     );
 }

@@ -40,7 +40,6 @@
     animation-name: petalfall;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    will-change: transform;
     backface-visibility: hidden;
-    filter: drop-shadow(0 2px 4px rgba(255, 150, 180, 0.3));
+    text-shadow: 0 2px 4px rgba(255, 150, 180, 0.3);
 }

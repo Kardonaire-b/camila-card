@@ -71,7 +71,7 @@
 }
 
 .cloud-animation {
-    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .cloud-1 {

@@ -33,6 +33,7 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
     const [isScratching, setIsScratching] = useState(false);
     const lastPosRef = useRef<{ x: number; y: number } | null>(null);
     const moveCountRef = useRef(0);
+    const lastHapticRef = useRef(0);
 
     // Initialize canvas with scratch layer
     useEffect(() => {
@@ -76,15 +77,23 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
         const ctx = canvas.getContext('2d');
         if (!ctx) return 0;
 
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const { width, height } = canvas;
+        const imageData = ctx.getImageData(0, 0, width, height);
         const pixels = imageData.data;
+
+        // Sample every 4th pixel in each direction (16x fewer pixels)
+        const step = 4;
+        let total = 0;
         let transparentPixels = 0;
 
-        for (let i = 3; i < pixels.length; i += 4) {
-            if (pixels[i] === 0) transparentPixels++;
+        for (let y = 0; y < height; y += step) {
+            for (let x = 0; x < width; x += step) {
+                total++;
+                if (pixels[(y * width + x) * 4 + 3] === 0) transparentPixels++;
+            }
         }
 
-        return transparentPixels / (pixels.length / 4);
+        return transparentPixels / total;
     }, []);
 
     const scratch = useCallback((x: number, y: number) => {
@@ -115,8 +124,12 @@ export default function ScratchCard({ t, children }: ScratchCardProps) {
 
         lastPosRef.current = { x: canvasX, y: canvasY };
 
-        // Haptic feedback (gentle vibration)
-        hapticPatterns.tap();
+        // Haptic feedback (throttled to every 50ms)
+        const now = Date.now();
+        if (now - lastHapticRef.current > 50) {
+            lastHapticRef.current = now;
+            hapticPatterns.tap();
+        }
 
         // Throttled check - only calculate percentage every N moves for performance
         moveCountRef.current++;

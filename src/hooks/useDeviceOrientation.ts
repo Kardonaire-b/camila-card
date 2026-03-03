@@ -15,6 +15,7 @@ export function useDeviceOrientation(): DeviceOrientation {
     const [tilt, setTilt] = useState({ tiltX: 0, tiltY: 0 });
     const [isSupported, setIsSupported] = useState(false);
     const smoothedRef = useRef({ x: 0, y: 0 });
+    const rafRef = useRef(0);
 
     useEffect(() => {
         const handleOrientation = (e: DeviceOrientationEvent) => {
@@ -30,9 +31,13 @@ export function useDeviceOrientation(): DeviceOrientation {
             smoothedRef.current.x += (rawX - smoothedRef.current.x) * smoothing;
             smoothedRef.current.y += (rawY - smoothedRef.current.y) * smoothing;
 
-            setTilt({
-                tiltX: smoothedRef.current.x,
-                tiltY: smoothedRef.current.y,
+            // Throttle setState to display refresh rate via rAF
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = requestAnimationFrame(() => {
+                setTilt({
+                    tiltX: smoothedRef.current.x,
+                    tiltY: smoothedRef.current.y,
+                });
             });
         };
 
@@ -63,7 +68,10 @@ export function useDeviceOrientation(): DeviceOrientation {
         };
 
         requestPermission();
-        return () => window.removeEventListener('deviceorientation', handleOrientation);
+        return () => {
+            window.removeEventListener('deviceorientation', handleOrientation);
+            cancelAnimationFrame(rafRef.current);
+        };
     }, []);
 
     return { ...tilt, isSupported };

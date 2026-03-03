@@ -4,7 +4,7 @@
  * Supports form submission to Telegram via Cloudflare Worker
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Translations, Lang } from '../../translations/translations';
 import { STORY_CHAPTERS } from '../../translations/story';
@@ -30,11 +30,16 @@ export default function History({ t, lang }: HistoryProps) {
         if (saved) setInputText(saved);
     }, []);
 
-    // Save draft to localStorage
+    // Save draft to localStorage (debounced)
+    const saveTimeoutRef = useRef<number | null>(null);
     useEffect(() => {
         if (inputText) {
-            localStorage.setItem('history-draft', inputText);
+            if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+            saveTimeoutRef.current = window.setTimeout(() => {
+                localStorage.setItem('history-draft', inputText);
+            }, 500);
         }
+        return () => { if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current); };
     }, [inputText]);
 
     const lastChapter = STORY_CHAPTERS[STORY_CHAPTERS.length - 1];
@@ -85,22 +90,30 @@ export default function History({ t, lang }: HistoryProps) {
             {/* Story Container */}
             <Card className="history-book p-6 overflow-hidden">
                 <div className="space-y-6">
-                    {STORY_CHAPTERS.map((chapter, index) => (
-                        <motion.div
-                            key={chapter.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: Math.min(index * 0.2, 0.6) }}
-                            className={`story-chapter ${chapter.author === 'ilya' ? 'story-ilya' : 'story-camila'}`}
-                        >
-                            <div className="story-author-label">
-                                {chapter.author === 'ilya' ? '✒️ Илья' : '🌸 Камила'}
-                            </div>
-                            <div className="story-text whitespace-pre-line">
-                                {chapter.text[lang]}
-                            </div>
-                        </motion.div>
-                    ))}
+                    {STORY_CHAPTERS.map((chapter, index) => {
+                        const shouldAnimate = index >= STORY_CHAPTERS.length - 2;
+                        const ChapterWrapper = shouldAnimate ? motion.div : 'div';
+                        const animationProps = shouldAnimate ? {
+                            initial: { opacity: 0, y: 20 },
+                            animate: { opacity: 1, y: 0 },
+                            transition: { delay: (index - (STORY_CHAPTERS.length - 2)) * 0.2 },
+                        } : {};
+
+                        return (
+                            <ChapterWrapper
+                                key={chapter.id}
+                                {...animationProps}
+                                className={`story-chapter ${chapter.author === 'ilya' ? 'story-ilya' : 'story-camila'}`}
+                            >
+                                <div className="story-author-label">
+                                    {chapter.author === 'ilya' ? '✒️ Илья' : '🌸 Камила'}
+                                </div>
+                                <div className="story-text whitespace-pre-line">
+                                    {chapter.text[lang]}
+                                </div>
+                            </ChapterWrapper>
+                        );
+                    })}
                 </div>
 
                 {/* Input Form */}
