@@ -125,9 +125,49 @@ El Faro, que siempre había mirado hacia afuera, hacia el horizonte vacío, por 
 
 El viejo mecanismo se detuvo. Ya no necesitaba girar. El tiempo de la búsqueda había terminado. Ahora comenzaba el tiempo de la Creación.`
         },
-        prompt: {
-            ru: 'Маяк стал Башней из Слоновой Кости — замкнутым, совершенным миром. Но опал продолжает сиять, пульсировать, просить чего-то большего. Что они сделают первым в этом новом мире, освещённом изнутри?',
-            es: 'El Faro se ha convertido en una Torre de Marfil, un mundo cerrado y perfecto. Pero el ópalo sigue brillando, pulsando, pidiendo algo más. ¿Qué es lo primero que harán juntos en este nuevo mundo iluminado por dentro?'
+    },
+    {
+        id: 8,
+        author: 'camila',
+        text: {
+            ru: `Наблюдая, как драгоценный камень в её руках словно обретает собственную жизнь, вопрос пронзил её кровь электрическим разрядом: а что, если это сияние... и есть его голос?
+
+С необъяснимой уверенностью она поместила опал в сердце фонаря. Камень источал мягкое мерцание звёздного неба, и его свет становился всё ярче.
+
+Маяк заговорил через эти цвета, проецируя на стены из слоновой кости сцены, которые двигались и дышали. Он пытался говорить с ней так, как слова никогда не позволяли; огни танцевали по его воле, рисуя на камне новый язык, который могла прочесть только она.
+
+В тот момент она почувствовала, что магия этого мгновения — не бред, а окончательный ответ на поиск, сопровождавший её всю жизнь. Глядя на цвета, проецируемые на её кожу, она обратилась в пустоту: — Ты тоже чувствуешь... что это конец нашего одиночества? —`,
+            es: `Mientras ella observaba cómo la piedra preciosa en sus manos parecía cobrar vida propia, una pregunta llegó como una descarga eléctrica por su sangre: ¿y si este brillo... fuera su voz?
+
+Con una extraña certeza, colocó el ópalo en el corazón de la linterna. La piedra emanó el titilo suave de un cielo estrellado y su luz se volvió, poco a poco, más intensa.
+
+El Faro comenzó a hablar a través de esos colores, proyectando sobre las paredes de marfil escenas que se movían y respiraban. Estaba tratando de comunicarse con ella de una forma que las palabras nunca permitieron; las luces danzaban bajo su dirección, dibujando en la piedra un lenguaje nuevo que solo ella podía leer.
+
+En ese momento, sintió que la magia de aquel instante no era un delirio, sino la respuesta definitiva a una búsqueda que la había acompañado toda su vida. Mirando los colores proyectados en su piel, lanzó una pregunta al aire: —¿Tú también sientes... que este es el final de nuestra soledad?—`
+        }
+    },
+    {
+        id: 9,
+        author: 'ilya',
+        text: {
+            ru: `Маяк не ответил словами. Они ему не были нужны. Вместо этого свет опала пульсировал один раз — глубоким, гулким ударом, от которого каменный пол под её ногами мягко завибрировал.
+
+Цвета, проецируемые на стены, перестали танцевать хаотично. Внезапно они скользнули к ней, обволакивая, как тёплый плащ, как объятие, сотканное из чистого света и безусловного принятия. Холод и сырость, веками населявшие башню, исчезли без следа, сменившись ароматом тёплого дерева и спокойного моря.
+
+И в этом светящемся объятии ответ впечатался прямо в её сердце — ясный и безоговорочный, не оставляющий места для сомнений:
+
+«Это не просто конец нашего одиночества. Это начало всего».
+
+Старый механизм перестал быть двигателем выживания. Маяк, некогда бывший холодной каменной темницей на краю мира, только что превратился в самое живое и безопасное место во вселенной. Потому что впервые свет не искал ничего в тумане. Свет нашёл её.`,
+            es: `El Faro no usó palabras para responder. No las necesitaba. En lugar de eso, la luz del ópalo pulsó una vez, con un latido profundo y resonante que hizo vibrar suavemente el suelo de piedra bajo los pies de ella.
+
+Los colores que se proyectaban en las paredes dejaron de danzar al azar. De pronto, se deslizaron hacia ella, envolviéndola como un manto cálido, como un abrazo hecho de luz pura y absoluta aceptación. El frío y la humedad que durante siglos habían habitado la torre se desvanecieron por completo, reemplazados por el aroma a madera cálida y a un mar en calma.
+
+Y en ese abrazo luminoso, la respuesta se grabó directamente en su corazón, clara y rotunda, sin dejar espacio a la duda:
+
+"No es solo el final de nuestra soledad. Es el principio de todo".
+
+El viejo mecanismo ya no era un motor de supervivencia. El Faro, que alguna vez fue una fría prisión de piedra al borde del mundo, acababa de convertirse en el lugar más vivo y seguro del universo. Porque por primera vez, la luz no buscaba nada en la niebla. La luz la había encontrado a ella.`
         }
     },
 ];
