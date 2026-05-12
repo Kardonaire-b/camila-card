@@ -37,6 +37,7 @@ export class SignalingService {
 
     const data = await res.json();
     this.peerId = data.peerId;
+    console.log('[signaling] joined:', data);
     return data;
   }
 
@@ -54,7 +55,7 @@ export class SignalingService {
 
     const to = this.peerId === "peer-a" ? "peer-b" : "peer-a";
 
-    await fetch(`${WORKER_URL}/call/signal`, {
+    const res = await fetch(`${WORKER_URL}/call/signal`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -64,6 +65,8 @@ export class SignalingService {
         data,
       }),
     });
+    const result = await res.json();
+    console.log(`[signaling] sent ${data.type} to ${to}:`, result);
   }
 
   /** Start polling for incoming signals */
@@ -77,15 +80,17 @@ export class SignalingService {
         const res = await fetch(
           `${WORKER_URL}/call/poll?key=${encodeURIComponent(this.key)}&peer=${this.peerId}`
         );
-        const { messages } = await res.json();
+        const body = await res.json();
+        const { messages } = body;
 
         if (messages?.length) {
+          console.log(`[signaling] poll got ${messages.length} message(s):`, messages.map((m: any) => m.data?.type));
           for (const msg of messages) {
             this.onMessage?.(msg);
           }
         }
       } catch (e) {
-        console.warn("[signaling] poll error:", e);
+        console.error("[signaling] poll error:", e);
       }
     }, POLL_INTERVAL);
   }

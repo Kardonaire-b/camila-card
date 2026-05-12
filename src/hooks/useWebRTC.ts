@@ -155,6 +155,7 @@ export function useWebRTC() {
   const handleSignal = useCallback(
     async (msg: SignalMessage) => {
       const pc = pcRef.current;
+      console.log('[webrtc] handleSignal:', msg.data?.type, 'pc:', !!pc);
       if (!pc) return;
 
       const { data } = msg;
@@ -217,6 +218,7 @@ export function useWebRTC() {
         stream.getTracks().forEach((t) => pc.addTrack(t, stream));
 
         // Start polling for signals (both sides)
+        console.log('[webrtc] starting signal poll, peerId:', signaling.getPeerId());
         signaling.startPolling(handleSignal);
 
         if (peerCount === 2) {
@@ -225,7 +227,9 @@ export function useWebRTC() {
 
           const offer = await pc.createOffer();
           await pc.setLocalDescription(offer);
+          console.log('[webrtc] offer created and sending...');
           await signaling.send({ type: "offer", sdp: pc.localDescription });
+          console.log('[webrtc] offer sent!');
         } else {
           // We're first — wait for the other person's offer via signal polling
           setCallState("waiting");
