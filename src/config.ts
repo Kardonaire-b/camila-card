@@ -10,6 +10,9 @@ export const LETTER_UNLOCK_DATE = new Date(Date.UTC(2025, 11, 31, 23, 35, 0));
 // Analytics API URL (can be overridden via environment variable)
 export const ANALYTICS_URL = import.meta.env.VITE_ANALYTICS_URL || 'https://calm-night-8d6b.ilyarokieplus.workers.dev/';
 
+// Worker base URL for voice call signaling (same worker, /call/* endpoints)
+export const WORKER_URL = import.meta.env.VITE_WORKER_URL || ANALYTICS_URL.replace(/\/+$/, '');
+
 // Language settings
 export const DEFAULT_LANGUAGE = 'ru' as const;
 export const SUPPORTED_LANGUAGES = ['ru', 'es'] as const;

@@ -1,0 +1,16 @@
+# Unified Cloudflare Worker — analytics + call signaling
+
+name = "camila-card-worker"
+main = "worker.ts"
+compatibility_date = "2024-12-01"
+
+# Invite keys for call access (comma-separated)
+[vars]
+INVITE_KEYS = "estrella"
+
+# KV namespace for call signaling
+# Create via: wrangler kv namespace create CALL_KV
+# Then paste the id below
+[[kv_namespaces]]
+binding = "CALL_KV"
+id = "ВСТАВЬ_ID_ПОСЛЕ_СОЗДАНИЯ"

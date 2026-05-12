@@ -32,9 +32,9 @@ const Lighthouse = lazy(() => import('./components/pages/Lighthouse'));
 const Letter = lazy(() => import('./components/pages/Letter'));
 const History = lazy(() => import('./components/pages/History'));
 const Schedule = lazy(() => import('./components/pages/Schedule'));
-const Thanks = lazy(() => import('./components/pages/Thanks'));
+const CallPage = lazy(() => import('./components/pages/CallPage'));
 
-export const PAGES = ["home", "lighthouse", "letter", "history", "schedule", "thanks"] as const;
+export const PAGES = ["home", "lighthouse", "letter", "history", "schedule", "call"] as const;
 export type Page = typeof PAGES[number];
 
 export default function CamilaPostcardV5() {
@@ -113,10 +113,10 @@ export default function CamilaPostcardV5() {
             <Schedule t={t} />
           </PageWrap>
         );
-      case "thanks":
+      case "call":
         return (
-          <PageWrap key="thanks" {...props}>
-            <Thanks t={t} onRelight={() => navigateTo("lighthouse")} />
+          <PageWrap key="call" {...props}>
+            <CallPage lang={lang} />
           </PageWrap>
         );
     }

@@ -4,7 +4,7 @@
  */
 
 import { memo, useMemo, useCallback } from 'react';
-import { Home as HomeIcon, Signal, Mail, BookOpen, Calendar, Gift } from 'lucide-react';
+import { Home as HomeIcon, Signal, Mail, BookOpen, Calendar, Phone } from 'lucide-react';
 import type { Translations } from '../../translations/translations';
 import type { Page } from '../../App';
 
@@ -31,7 +31,7 @@ const NavIcons = {
     letter: <Mail className="h-5 w-5" strokeWidth={1.5} />,
     history: <BookOpen className="h-5 w-5" strokeWidth={1.5} />,
     schedule: <Calendar className="h-5 w-5" strokeWidth={1.5} />,
-    thanks: <Gift className="h-5 w-5" strokeWidth={1.5} />,
+    call: <Phone className="h-5 w-5" strokeWidth={1.5} />,
 } as const;
 
 /** Individual nav button - memoized */
@@ -70,8 +70,8 @@ export default function BottomNav({ t, page, onNavigate }: BottomNavProps) {
         { key: "letter", label: t.navLetter, icon: NavIcons.letter },
         { key: "history", label: t.navHistory, icon: NavIcons.history },
         { key: "schedule", label: t.navSchedule, icon: NavIcons.schedule },
-        { key: "thanks", label: t.navThanks, icon: NavIcons.thanks },
-    ], [t.navHome, t.navLighthouse, t.navLetter, t.navHistory, t.navSchedule, t.navThanks]);
+        { key: "call", label: t.navCall, icon: NavIcons.call },
+    ], [t.navHome, t.navLighthouse, t.navLetter, t.navHistory, t.navSchedule, t.navCall]);
 
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-10">
