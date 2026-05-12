@@ -160,6 +160,7 @@ export function useWebRTC() {
       const { data } = msg;
 
       if (data.type === "offer") {
+        setCallState("connecting");
         await pc.setRemoteDescription(new RTCSessionDescription(data.sdp));
         const answer = await pc.createAnswer();
         await pc.setLocalDescription(answer);
@@ -189,35 +190,6 @@ export function useWebRTC() {
     []
   );
 
-  // ── Start call (initiator) ──
-  const startAsInitiator = useCallback(
-    async (signaling: SignalingService) => {
-      setCallState("connecting");
-
-      const pc = createPC(signaling);
-
-      // Add local audio
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-        },
-      });
-      localStreamRef.current = stream;
-      stream.getTracks().forEach((t) => pc.addTrack(t, stream));
-
-      // Listen for signals
-      signaling.startPolling(handleSignal);
-
-      // Create and send offer
-      const offer = await pc.createOffer();
-      await pc.setLocalDescription(offer);
-      await signaling.send({ type: "offer", sdp: pc.localDescription });
-    },
-    [createPC, handleSignal]
-  );
-
   // ── Join call ──
   const joinCall = useCallback(
     async (key: string) => {
@@ -230,44 +202,54 @@ export function useWebRTC() {
 
         const { peerCount } = await signaling.join();
 
+        // Get mic access immediately (both sides)
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+          },
+        });
+        localStreamRef.current = stream;
+
+        // Set up peer connection (both sides)
+        const pc = createPC(signaling);
+        stream.getTracks().forEach((t) => pc.addTrack(t, stream));
+
+        // Start polling for signals (both sides)
+        signaling.startPolling(handleSignal);
+
         if (peerCount === 2) {
-          // We're the second one — wait for offer
+          // We're the second one — WE initiate (send the offer)
           setCallState("connecting");
 
-          const pc = createPC(signaling);
-
-          const stream = await navigator.mediaDevices.getUserMedia({
-            audio: {
-              echoCancellation: true,
-              noiseSuppression: true,
-              autoGainControl: true,
-            },
-          });
-          localStreamRef.current = stream;
-          stream.getTracks().forEach((t) => pc.addTrack(t, stream));
-
-          signaling.startPolling(handleSignal);
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+          await signaling.send({ type: "offer", sdp: pc.localDescription });
         } else {
-          // We're first — wait for the other person
+          // We're first — wait for the other person's offer via signal polling
           setCallState("waiting");
 
-          // Poll room status until someone joins
+          // Also poll room status as a backup indicator
           waitPollRef.current = setInterval(async () => {
-            const status = await signaling.getStatus();
-            if (status.peerCount === 2) {
-              clearInterval(waitPollRef.current!);
-              waitPollRef.current = null;
-              // We were first, so we initiate
-              await startAsInitiator(signaling);
+            try {
+              const status = await signaling.getStatus();
+              if (status.peerCount === 0) {
+                // Room was cleaned up (stale), re-join
+                clearInterval(waitPollRef.current!);
+                waitPollRef.current = null;
+              }
+            } catch {
+              // non-fatal
             }
-          }, 2000);
+          }, 5000);
         }
       } catch (e: any) {
         setCallState("error");
         setError(e.message || "unknown_error");
       }
     },
-    [createPC, handleSignal, startAsInitiator]
+    [createPC, handleSignal]
   );
 
   // ── Hang up ──

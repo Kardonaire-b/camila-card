@@ -19,6 +19,7 @@
 
 const ROOM_TTL = 3600; // 1 hour
 const INBOX_TTL = 120; // 2 minutes
+const STALE_ROOM_MS = 5 * 60 * 1000; // 5 minutes — auto-reset stale rooms
 
 function corsHeaders(env) {
   const allowedOrigin = env.ALLOWED_ORIGIN || '*';
@@ -187,8 +188,18 @@ async function handleCallJoin(request, env) {
   const raw = await env.CALL_KV.get(roomKey);
   let room = raw ? JSON.parse(raw) : { peers: [], createdAt: Date.now() };
 
+  // Auto-reset stale rooms (older than 5 min with 2 peers = abandoned call)
   if (room.peers.length >= 2) {
-    return json({ error: 'room_full' }, 409, env);
+    const age = Date.now() - (room.createdAt || 0);
+    if (age > STALE_ROOM_MS) {
+      // Clean up stale inboxes
+      await env.CALL_KV.delete(`inbox:${key}:peer-a`);
+      await env.CALL_KV.delete(`inbox:${key}:peer-b`);
+      // Reset room
+      room = { peers: [], createdAt: Date.now() };
+    } else {
+      return json({ error: 'room_full' }, 409, env);
+    }
   }
 
   const peerId = room.peers.length === 0 ? 'peer-a' : 'peer-b';
