@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import handImage from '../../assets/new_image.png';
 import Confetti from '../effects/Confetti';
+import LetterMelody from '../effects/LetterMelody';
 import { useInterval } from '../../hooks';
 import {
     parseTextToSegments,
@@ -148,9 +149,16 @@ export default function Letter({ t }: LetterProps) {
             <Confetti />
 
             <div className="glass soft-card festive-glow letter-paper letter-decorations letter-vignette rounded-3xl p-5 overflow-hidden">
-                <h2 className="mb-3 text-xl font-semibold text-[var(--ink)]">
+                <h2 className="mb-3 text-xl font-semibold text-[var(--ink)] pr-12">
                     <span className="letter-title-pop">{t.letterTitle}</span>
                 </h2>
+
+                <LetterMelody
+                    playingLabel={t.melodyPlaying}
+                    pausedLabel={t.melodyPaused}
+                    playAria={t.a11y.playMelody}
+                    pauseAria={t.a11y.pauseMelody}
+                />
 
                 <div
                     ref={scrollContainerRef}

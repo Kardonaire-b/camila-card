@@ -48,8 +48,81 @@
     opacity: 0.4;
     pointer-events: none;
     top: 0.75rem;
-    right: 0.75rem;
+    left: 0.75rem;
     animation: twinkle 4s ease-in-out infinite;
+}
+
+/* Melody control: equalizer bars shown while playing */
+.melody-eq {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+}
+
+.melody-eq span {
+    width: 3px;
+    height: 100%;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: bottom;
+    animation: eq-bounce 0.9s ease-in-out infinite;
+}
+
+.melody-eq span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.melody-eq span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.melody-eq span:nth-child(4) {
+    animation-delay: 0.45s;
+}
+
+@keyframes eq-bounce {
+
+    0%,
+    100% {
+        transform: scaleY(0.35);
+    }
+
+    50% {
+        transform: scaleY(1);
+    }
+}
+
+/* Pulsing ring around the melody button while playing */
+.melody-pulse {
+    animation: melody-pulse-ring 1.6s ease-out infinite;
+}
+
+@keyframes melody-pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 182, 193, 0.6);
+    }
+
+    100% {
+        box-shadow: 0 0 0 12px rgba(255, 182, 193, 0);
+    }
+}
+
+/* Gentle breathing of the "now playing" status line */
+.melody-status-playing {
+    animation: melody-status-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes melody-status-pulse {
+
+    0%,
+    100% {
+        opacity: 0.75;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 /* Fade-in glow for completed paragraphs */

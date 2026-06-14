@@ -28,6 +28,8 @@ export const translations = {
             "Sigue brillando con todos tus colores. Sigue sonando. Y yo siempre seré tu acompañamiento. \n",
             "¡Feliz cumpleaños, mi vida. Te amo con toda mi alma, hoy y para siempre! ❤️"
         ],
+        melodyPlaying: "🔊 Suena la melodía de cumpleaños — sube el volumen ✨",
+        melodyPaused: "🎵 Toca la nota en la esquina para escuchar la melodía",
         navHome: "Inicio",
         navLighthouse: "Faro",
         navLetter: "Carta",
@@ -97,6 +99,8 @@ export const translations = {
             "Продолжай сиять всеми своими цветами. Продолжай звучать. А я всегда буду твоим аккомпанементом. \n",
             "¡Feliz cumpleaños, mi vida. Te amo con toda mi alma, hoy y para siempre! ❤️"
         ],
+        melodyPlaying: "🔊 Звучит мелодия ко дню рождения — сделай звук погромче ✨",
+        melodyPaused: "🎵 Нажми на нотку в углу, чтобы включить мелодию",
         navHome: "Главная",
         navLighthouse: "Маяк",
         navLetter: "Письмо",
