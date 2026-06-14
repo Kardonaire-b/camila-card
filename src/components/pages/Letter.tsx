@@ -7,6 +7,7 @@ import { useState, useEffect, useMemo, useRef, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
 import handImage from '../../assets/new_image.png';
+import Confetti from '../effects/Confetti';
 import { useInterval } from '../../hooks';
 import {
     parseTextToSegments,
@@ -143,8 +144,13 @@ export default function Letter({ t }: LetterProps) {
 
     return (
         <div className="space-y-4">
-            <div className="glass soft-card letter-paper letter-decorations letter-vignette rounded-3xl p-5 overflow-hidden">
-                <h2 className="mb-3 text-xl font-semibold text-[var(--ink)]">{t.letterTitle}</h2>
+            {/* One-shot birthday confetti burst when the tab opens */}
+            <Confetti />
+
+            <div className="glass soft-card festive-glow letter-paper letter-decorations letter-vignette rounded-3xl p-5 overflow-hidden">
+                <h2 className="mb-3 text-xl font-semibold text-[var(--ink)]">
+                    <span className="letter-title-pop">{t.letterTitle}</span>
+                </h2>
 
                 <div
                     ref={scrollContainerRef}

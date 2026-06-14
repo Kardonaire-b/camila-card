@@ -12,7 +12,7 @@ export const translations = {
         horizonSunset: "🌇 Atardecer",
         horizonNight: "🌙 Noche",
         horizonHint: "Cambia el cielo",
-        letterTitle: "💌 Carta para ti",
+        letterTitle: "🎂 ¡Feliz cumpleaños, mi sol!",
         letterBlocks: [
             "Mi solcito más amado. Mi hermosa Guardiana. \n",
             "Hoy es el día en que vino al mundo la persona que lo cambió absolutamente todo. El día en que se encendió una luz que, más de veinte años después, atravesó océanos, continentes y el ruido digital para encontrarme en mi oscuridad. \n",
@@ -81,7 +81,7 @@ export const translations = {
         horizonSunset: "🌇 Закат",
         horizonNight: "🌙 Ночь",
         horizonHint: "Меняй небо",
-        letterTitle: "💌 Письмо для тебя",
+        letterTitle: "🎂 С Днём Рождения, солнышко",
         letterBlocks: [
             "Моё самое любимое солнышко. Моя прекрасная Хранительница. \n",
             "Сегодня день, когда в этом мире появился человек, изменивший абсолютно всё. Тот день, когда зажёгся свет, который спустя двадцать с лишним лет пробился сквозь океаны, континенты и цифровой шум, чтобы найти меня в моей темноте. \n",

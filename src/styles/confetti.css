@@ -1,0 +1,51 @@
+/*
+ * Confetti Effect Styles
+ * One-shot birthday burst that falls from the top and fades out.
+ */
+
+.confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -5%;
+    border-radius: 2px;
+    opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    animation-name: confetti-fall;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.confetti-emoji {
+    background: transparent !important;
+    border-radius: 0;
+    line-height: 1;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translate3d(0, -10%, 0) rotate(var(--rot, 0deg));
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate3d(var(--drift, 0), 105vh, 0) rotate(calc(var(--rot, 0deg) + 540deg));
+        opacity: 0;
+    }
+}
