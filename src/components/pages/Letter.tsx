@@ -6,7 +6,7 @@
 import { useState, useEffect, useMemo, useRef, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import type { Translations } from '../../translations/translations';
-import handImage from '../../assets/my_hand.png';
+import handImage from '../../assets/new_image.png';
 import { useInterval } from '../../hooks';
 import {
     parseTextToSegments,
@@ -181,7 +181,7 @@ export default function Letter({ t }: LetterProps) {
                         <div className="relative h-48 md:h-64 w-auto rounded-2xl overflow-hidden border-4 border-[rgba(212,165,116,0.3)] shadow-lg sepia-[0.3]">
                             <img
                                 src={handImage}
-                                alt="My Hand"
+                                alt="Para ti"
                                 className="w-full h-full object-cover"
                             />
                         </div>
