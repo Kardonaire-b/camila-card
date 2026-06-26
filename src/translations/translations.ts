@@ -65,6 +65,8 @@ export const translations = {
             'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
             'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
         ],
+        scheduleMonthPrev: 'Mes anterior',
+        scheduleMonthNext: 'Mes siguiente',
         scheduleLegendDay: 'Día',
         scheduleLegendNight: 'Noche',
         scheduleLegendOff: 'Casa',
@@ -136,6 +138,8 @@ export const translations = {
             'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
             'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
         ],
+        scheduleMonthPrev: 'Предыдущий месяц',
+        scheduleMonthNext: 'Следующий месяц',
         scheduleLegendDay: 'День',
         scheduleLegendNight: 'Ночь',
         scheduleLegendOff: 'Дома',

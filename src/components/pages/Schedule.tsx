@@ -5,6 +5,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Translations } from '../../translations/translations';
 import Card from '../ui/Card';
 import { SCHEDULE_START_DATE } from '../../config';
@@ -112,15 +113,18 @@ const SHIFT_EMOJIS: Record<ShiftType, string> = {
 };
 
 export default function Schedule({ t }: ScheduleProps) {
-    const [viewDate] = useState(() => new Date());
+    // Current year is fixed; the user picks which month of it to view
+    const currentYear = useMemo(() => new Date().getFullYear(), []);
+    const currentMonth = useMemo(() => new Date().getMonth(), []);
+    const [selectedMonth, setSelectedMonth] = useState(currentMonth);
 
     // Use centralized translations for weekdays and months
     const weekdays = t.weekdays;
     const months = t.months;
 
     const calendarDays = useMemo(() =>
-        getCalendarDays(viewDate.getFullYear(), viewDate.getMonth(), SCHEDULE_START_DATE),
-        [viewDate]
+        getCalendarDays(currentYear, selectedMonth, SCHEDULE_START_DATE),
+        [currentYear, selectedMonth]
     );
 
     const today = new Date();
@@ -143,11 +147,31 @@ export default function Schedule({ t }: ScheduleProps) {
             </Card>
 
             <Card className="p-4">
-                {/* Month header */}
-                <div className="text-center mb-4">
-                    <h3 className="text-lg font-medium text-[var(--ink)]">
-                        {months[viewDate.getMonth()]} {viewDate.getFullYear()}
+                {/* Month selector (within current year) */}
+                <div className="mb-4 flex items-center justify-between gap-2">
+                    <button
+                        type="button"
+                        onClick={() => setSelectedMonth(m => Math.max(0, m - 1))}
+                        disabled={selectedMonth === 0}
+                        aria-label={t.scheduleMonthPrev}
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/40 bg-white/30 text-[var(--ink)] transition hover:bg-white/60 focus:outline-none focus:ring-2 focus:ring-black/10 disabled:pointer-events-none disabled:opacity-30"
+                    >
+                        <ChevronLeft className="h-5 w-5" />
+                    </button>
+
+                    <h3 className="text-lg font-medium text-[var(--ink)] tabular-nums">
+                        {months[selectedMonth]} {currentYear}
                     </h3>
+
+                    <button
+                        type="button"
+                        onClick={() => setSelectedMonth(m => Math.min(11, m + 1))}
+                        disabled={selectedMonth === 11}
+                        aria-label={t.scheduleMonthNext}
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/40 bg-white/30 text-[var(--ink)] transition hover:bg-white/60 focus:outline-none focus:ring-2 focus:ring-black/10 disabled:pointer-events-none disabled:opacity-30"
+                    >
+                        <ChevronRight className="h-5 w-5" />
+                    </button>
                 </div>
 
                 {/* Weekday headers */}
